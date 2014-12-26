@@ -1,0 +1,65 @@
+---
+title: "trimr: Response Time Trimming in R"
+author: "James A. Grange"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This package provides (hopefully) useful functions for performing all standard methods of response time (RT) trimming used in experimental psychology. These include:
+
+- `absoluteRT`: Absolute trimming  using an RT value as the cut-off (e.g., trimming all RTs below 150ms and above 2,000ms).
+- `absoluteSD`: Absolute trimming using standard deviation as the cut-off (e.g., trimming all RTs slower than 2SDs above the group mean). 
+- `perCell`: Uses SD trimming per cell of the experimental design (e.g., trimming all RTs 2.5SD above the mean of each experimental condition). 
+- `perParticipant`: Uses SD trimming per participant (e.g., trimming all RTs 2.5SD above each participant's mean).
+- `perCellParticipant`: Uses SD trimming per cell, per participant. This is the more typical trimming method used (e.g., trimming all RTs 2.5SD above each participant's mean per cell of the experimental design). 
+- `nonRecursive`: Removes any RT that falls outside a certain number of SDs from the mean (of the whole sample of RTs) being considered, with the value of SD being determined by the sample size of the distribution, with a lower SD value being used for smaller sample sizes.
+- `modifiedRecursive`: An iterative trimming procedure.
+- `hybridRecursive`: Takes the average of the modifiedRecursive and the nonRecursive functions.
+
+
+
+# The Data
+The package ships with some example data to explore the above functions with; to load this, use
+
+```{r}
+# load the trimr package
+library(trimr)
+
+# load the data set
+data(exampleData)
+
+# examine it
+head(exampleData)
+```
+This is a data frame containing data from 32 participants (identification coded in the "participant" column) in two different experimental conditions (the "condition" column). Their response time ("rt") in milliseconds and "accuracy" is coded (1 is a correct response, 0 an error response). 
+
+Of course, this data is here just for example usage. You would usually be using your own data. Ensure that your data set has columns with the same names above (even if you have other columns, or they are in a different order). 
+
+# The Functions
+
+## absoluteRT
+
+## absoluteSD (to do)
+
+## perCell (to do)
+
+## perParticipant (to do)
+
+## perCellParticipant (to do)
+
+## nonRecursive (to do)
+
+## modifiedRecursive (to do)
+
+## hybridRecursive (to do)
+
+
+
+## 
+
+
+

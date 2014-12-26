@@ -1,4 +1,4 @@
-<div id="header">
+﻿<div id="header">
 <h1 class="title">trimr: Response Time Trimming in R</h1>
 <h4 class="author"><em>James A. Grange</em></h4>
 <h4 class="date"><em>2014-12-26</em></h4>
@@ -9,13 +9,12 @@
 <ul>
 <li><code>absoluteRT</code>: Absolute trimming using an RT value as the cut-off (e.g., trimming all RTs below 150ms and above 2,000ms).</li>
 <li><code>absoluteSD</code>: Absolute trimming using standard deviation as the cut-off (e.g., trimming all RTs slower than 2SDs above the group mean).</li>
-<li><code>perCellSD</code>:</li>
-<li><code>perParticipantSD</code>:</li>
-<li><code>perCellParticipantSD</code>:</li>
-<li><code>simpleRecursive</code>:</li>
-<li><code>nonRecursive</code>:</li>
-<li><code>modifiedRecursive</code>:</li>
-<li><code>hybridRecursive</code>:</li>
+<li><code>perCell</code>: Uses SD trimming per cell of the experimental design (e.g., trimming all RTs 2.5SD above the mean of each experimental condition).</li>
+<li><code>perParticipant</code>: Uses SD trimming per participant (e.g., trimming all RTs 2.5SD above each participant’s mean).</li>
+<li><code>perCellParticipant</code>: Uses SD trimming per cell, per participant. This is the more typical trimming method used (e.g., trimming all RTs 2.5SD above each participant’s mean per cell of the experimental design).</li>
+<li><code>nonRecursive</code>: Removes any RT that falls outside a certain number of SDs from the mean (of the whole sample of RTs) being considered, with the value of SD being determined by the sample size of the distribution, with a lower SD value being used for smaller sample sizes.</li>
+<li><code>modifiedRecursive</code>: An iterative trimming procedure.</li>
+<li><code>hybridRecursive</code>: Takes the average of the modifiedRecursive and the nonRecursive functions.</li>
 </ul>
 <div id="the-data" class="section level1">
 <h1>The Data</h1>
@@ -38,34 +37,19 @@
 <p>This is a data frame containing data from 32 participants (identification coded in the “participant” column) in two different experimental conditions (the “condition” column). Their response time (“rt”) in milliseconds and “accuracy” is coded (1 is a correct response, 0 an error response).</p>
 <p>Of course, this data is here just for example usage. You would usually be using your own data. Ensure that your data set has columns with the same names above (even if you have other columns, or they are in a different order).</p>
 </div>
-<div id="absolute-trimming" class="section level1">
-<h1>Absolute Trimming</h1>
-<div id="response-time-cutoffs" class="section level2">
-<h2>Response Time Cutoffs</h2>
+<div id="the-functions" class="section level1">
+<h1>The Functions</h1>
+<div id="absolutert" class="section level2">
+<h2>absoluteRT</h2>
 </div>
-<div id="standard-deviation-cutoffs" class="section level2">
-<h2>Standard Deviation Cutoffs</h2>
+<div id="absolutesd-to-do" class="section level2">
+<h2>absoluteSD (to do)</h2>
 </div>
+<div id="percell-to-do" class="section level2">
+<h2>perCell (to do)</h2>
 </div>
-<div id="standard-deviation-trimming" class="section level1">
-<h1>Standard Deviation Trimming</h1>
+<div id="perparticipant-to-do" class="section level2">
+<h2>perParticipant (to do)</h2>
 </div>
-<div id="recursive-moving-criterion-procedures" class="section level1">
-<h1>Recursive / Moving Criterion Procedures</h1>
-</div>
-
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-</body>
-</html>
-
+<div id="percellparticipant-to-do" class="section level2">
+<h2>perCellParticipant (to do)</h2>
