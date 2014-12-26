@@ -53,3 +53,32 @@
 </div>
 <div id="percellparticipant-to-do" class="section level2">
 <h2>perCellParticipant (to do)</h2>
+</div>
+<div id="nonrecursive-to-do" class="section level2">
+<h2>nonRecursive (to do)</h2>
+</div>
+<div id="modifiedrecursive-to-do" class="section level2">
+<h2>modifiedRecursive (to do)</h2>
+</div>
+<div id="hybridrecursive-to-do" class="section level2">
+<h2>hybridRecursive (to do)</h2>
+</div>
+<div id="section" class="section level2">
+<h2></h2>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
