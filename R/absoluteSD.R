@@ -36,10 +36,159 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
                        seconds = FALSE){
 
   # remove errors if the user has asked for it
-  if(omiterrors == TRUE){
-    trimmedData <- subset(rawdata, rawdata$accuracy == 1)
+  if(omitErrors == TRUE){
+    trimmedData <- subset(data, data$accuracy == 1)
   } else {
-    trimmedData <- rawdata
+    trimmedData <- data
   }
 
-}
+  # if the data is in seconds, then set decimal places to 3, otherwise set it
+  # to 0
+  if(seconds == TRUE){
+    digits <- 3
+  } else {
+    digits <- 0
+  }
+
+
+  # get the list of participant numbers
+  participant <- unique(trimmedData$participant)
+
+  # get the list of experimental conditions
+  conditionList <- unique(trimmedData$condition)
+
+  # trim the data to remove trials below minRT
+  trimmedData <- subset(trimmedData, trimmedData$rt > minRT)
+
+  # what is the mean & SD of the whole group's data?
+  meanRT <- mean(trimmedData$rt)
+  sdRT <- sd(trimmedData$rt)
+
+  # what is the cut-off value?
+  cutoff <- meanRT + (sd * sdRT)
+
+  # remove these rts
+  trimmedData <- subset(trimmedData, trimmedData$rt < cutoff)
+
+
+  # if the user asked for trial-level data, return immediately to user
+  if(returnType == "raw"){
+    return(trimmedData)
+  }
+
+  # if the user has asked for means, then split the data into separate
+  # conditions, and display the means per condition.
+  if(returnType == "mean"){
+
+    # ready the final data set
+    finalData <- matrix(0, nrow = length(participant),
+                        ncol = length(conditionList))
+
+    # give the columns the condition names
+    colnames(finalData) <- conditionList
+
+    # add the participant column
+    finalData <- cbind(participant, finalData)
+
+    # convert to data frame
+    finalData <- data.frame(finalData)
+
+
+    # loop over all conditions, and over all subjects, and find mean RT
+
+    j <- 2 # to keep track of conditions looped over. Starts at 2 as this is
+    # where the first condition's column is.
+
+    for(currCondition in conditionList){
+
+      # get the current condition's data
+      tempData <- subset(trimmedData, trimmedData$condition == currCondition)
+
+
+
+      #now loop over all participants
+      i <- 1
+
+      for(currParticipant in participant){
+
+        # get that participant's data
+        participantData <- subset(tempData,
+                                  tempData$participant == currParticipant)
+
+        # calculate & store their mean response time
+        finalData[i, j] <- round(mean(participantData$rt), digits = digits)
+
+        # update participant counter
+        i <- i + 1
+      }
+
+
+
+      # update nCondition counter
+      j <- j + 1
+
+    } # end of condition loop
+
+    return(finalData)
+
+  } ## end MEAN sub-function
+
+
+  # if the user has asked for medians, then split the data into separate
+  # conditions, and display the medians per condition.
+  if(returnType == "median"){
+
+    # ready the final data set
+    finalData <- matrix(0, nrow = length(participant),
+                        ncol = length(conditionList))
+
+    # give the columns the condition names
+    colnames(finalData) <- conditionList
+
+    # add the participant column
+    finalData <- cbind(participant, finalData)
+
+    # convert to data frame
+    finalData <- data.frame(finalData)
+
+
+    # loop over all conditions, and over all subjects, and find mean RT
+
+    j <- 2 # to keep track of conditions looped over. Starts at 2 as this is
+    # where the first condition's column is.
+
+    for(currCondition in conditionList){
+
+      # get the current condition's data
+      tempData <- subset(trimmedData, trimmedData$condition == currCondition)
+
+
+
+      #now loop over all participants
+      i <- 1
+
+      for(currParticipant in participant){
+
+        # get that participant's data
+        participantData <- subset(tempData,
+                                  tempData$participant == currParticipant)
+
+        # calculate & store their mean response time
+        finalData[i, j] <- round(median(participantData$rt), digits = digits)
+
+        # update participant counter
+        i <- i + 1
+      }
+
+
+      # update nCondition counter
+      j <- j + 1
+
+    } # end of condition loop
+
+    return(finalData)
+
+  }
+
+} # end of function
+#------------------------------------------------------------------------------
