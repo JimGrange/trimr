@@ -32,8 +32,12 @@
 #' To do
 #' @export
 
-absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
+absoluteSD <- function(data, minRT, sd, omitErrors = TRUE, returnType = "raw",
                        seconds = FALSE){
+
+
+  # change the variable name for sd (as this is an R function)
+  stDev <- sd
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
@@ -64,7 +68,7 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
   sdRT <- sd(trimmedData$rt)
 
   # what is the cut-off value?
-  cutoff <- meanRT + (sd * sdRT)
+  cutoff <- meanRT + (stDev * sdRT)
 
   # remove these rts
   trimmedData <- subset(trimmedData, trimmedData$rt < cutoff)
@@ -121,8 +125,6 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
         i <- i + 1
       }
 
-
-
       # update nCondition counter
       j <- j + 1
 
@@ -160,7 +162,6 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
 
       # get the current condition's data
       tempData <- subset(trimmedData, trimmedData$condition == currCondition)
-
 
 
       #now loop over all participants

@@ -33,8 +33,11 @@
 #' To do
 #' @export
 
-perCell <- function(data, minRT, sd, omitErrors = TRUE,
-                    returnType = "raw", seconds = FALSE){
+perCell <- function(data, minRT, sd, omitErrors = TRUE, returnType = "raw",
+                    seconds = FALSE){
+
+  # change the variable name for sd (as this is an R function)
+  stDev <- sd
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
@@ -74,7 +77,7 @@ perCell <- function(data, minRT, sd, omitErrors = TRUE,
       curData <- subset(trimmedData, trimmedData$condition == cond)
       curMean <- mean(curData$rt)
       curSD <- sd(curData$rt)
-      curCutoff <- curMean + (sd * curSD)
+      curCutoff <- curMean + (stDev * curSD)
 
       # trim the data
       curData <- subset(curData, curData$rt < curCutoff)
@@ -100,7 +103,7 @@ perCell <- function(data, minRT, sd, omitErrors = TRUE,
       curData <- subset(trimmedData, trimmedData$condition == cond)
       curMean <- mean(curData$rt)
       curSD <- sd(curData$rt)
-      curCutoff <- curMean + (sd * curSD)
+      curCutoff <- curMean + (stDev * curSD)
 
       # trim the data
       curData <- subset(curData, curData$rt < curCutoff)
@@ -108,6 +111,10 @@ perCell <- function(data, minRT, sd, omitErrors = TRUE,
       # bind the data
       tempData <- rbind(tempData, curData)
     }
+
+    # change variable names
+    trimmedData <- tempData
+    tempData <- NULL
 
     ## now loop over each subject and calculate their average
     # ready the final data set
@@ -173,7 +180,7 @@ perCell <- function(data, minRT, sd, omitErrors = TRUE,
       curData <- subset(trimmedData, trimmedData$condition == cond)
       curMean <- mean(curData$rt)
       curSD <- sd(curData$rt)
-      curCutoff <- curMean + (sd * curSD)
+      curCutoff <- curMean + (stDev * curSD)
 
       # trim the data
       curData <- subset(curData, curData$rt < curCutoff)
@@ -181,6 +188,10 @@ perCell <- function(data, minRT, sd, omitErrors = TRUE,
       # bind the data
       tempData <- rbind(tempData, curData)
     }
+
+    # change variable names
+    trimmedData <- tempData
+    tempData <- NULL
 
     ## now loop over each subject and calculate their average
     # ready the final data set
