@@ -1,9 +1,10 @@
 #------------------------------------------------------------------------------
-#' Absolute SD RT trimming
+#' Per Cell SD RT trimming
 #'
-#' \code{absoluteSD} takes a data frame of RT data and returns trimmed rt data
-#' that fall below a set standard deviation above the group's mean (e.g.,
-#' trimming all RTs slower than 2SDs above the group mean.
+#' \code{perCell} takes a data frame of RT data and returns trimmed rt data
+#' that fall below a set standard deviation above the each condition's mean
+#' (e.g., trimming all RTs slower than 2SDs of each condition's mean). This
+#' function uses the group mean to calculate the cutoff criteria.
 #'
 #' By passing a data frame containing raw response time data, together with
 #' trimming criteria, the function will return trimmed data, either in the form
@@ -32,8 +33,8 @@
 #' To do
 #' @export
 
-absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
-                       seconds = FALSE){
+perCell <- function(data, minRT, sd, omitErrors = TRUE,
+                    returnType = "raw", seconds = FALSE){
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
@@ -59,26 +60,56 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
   # trim the data to remove trials below minRT
   trimmedData <- subset(trimmedData, trimmedData$rt > minRT)
 
-  # what is the mean & SD of the whole group's data?
-  meanRT <- mean(trimmedData$rt)
-  sdRT <- sd(trimmedData$rt)
 
-  # what is the cut-off value?
-  cutoff <- meanRT + (sd * sdRT)
-
-  # remove these rts
-  trimmedData <- subset(trimmedData, trimmedData$rt < cutoff)
-
-
-  # if the user asked for trial-level data, return immediately to user
+  ### do "raw"
   if(returnType == "raw"){
-    return(trimmedData)
+
+    # initialise variable to keep trimmed data in
+    finalData <- NULL
+
+    # loop over each condition
+    for(cond in conditionList){
+
+      # get the data, & find cutoff
+      curData <- subset(trimmedData, trimmedData$condition == cond)
+      curMean <- mean(curData$rt)
+      curSD <- sd(curData$rt)
+      curCutoff <- curMean + (sd * curSD)
+
+      # trim the data
+      curData <- subset(curData, curData$rt < curCutoff)
+
+      # bind the data
+      finalData <- rbind(finalData, curData)
+    }
+
+    return(finalData)
   }
 
-  # if the user has asked for means, then split the data into separate
-  # conditions, and display the means per condition.
+  ### do "mean"
   if(returnType == "mean"){
 
+    ## first, find the cutoff for each condition, and remove the necessary
+    ## trials
+
+    # initialise variable to keep trimmed data in
+    tempData <- NULL
+
+    for(cond in conditionList){
+      # get the data, & find cutoff
+      curData <- subset(trimmedData, trimmedData$condition == cond)
+      curMean <- mean(curData$rt)
+      curSD <- sd(curData$rt)
+      curCutoff <- curMean + (sd * curSD)
+
+      # trim the data
+      curData <- subset(curData, curData$rt < curCutoff)
+
+      # bind the data
+      tempData <- rbind(tempData, curData)
+    }
+
+    ## now loop over each subject and calculate their average
     # ready the final data set
     finalData <- matrix(0, nrow = length(participant),
                         ncol = length(conditionList))
@@ -92,18 +123,16 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
     # convert to data frame
     finalData <- data.frame(finalData)
 
+    # loop over conditions & subjects and calculate their average
 
-    # loop over all conditions, and over all subjects, and find mean RT
+    # to index over conditions. It starts at 2 because this is the first column
+    # in the data frame containing condition information
+    j <- 2
 
-    j <- 2 # to keep track of conditions looped over. Starts at 2 as this is
-    # where the first condition's column is.
-
-    for(currCondition in conditionList){
+    for(curCondition in conditionList){
 
       # get the current condition's data
-      tempData <- subset(trimmedData, trimmedData$condition == currCondition)
-
-
+      tempData <- subset(trimmedData, trimmedData$condition == curCondition)
 
       #now loop over all participants
       i <- 1
@@ -121,22 +150,39 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
         i <- i + 1
       }
 
-
-
       # update nCondition counter
       j <- j + 1
-
-    } # end of condition loop
+    }
 
     return(finalData)
 
-  } ## end MEAN sub-function
+  }
 
+  ### do "median"
 
-  # if the user has asked for medians, then split the data into separate
-  # conditions, and display the medians per condition.
   if(returnType == "median"){
 
+    ## first, find the cutoff for each condition, and remove the necessary
+    ## trials
+
+    # initialise variable to keep trimmed data in
+    tempData <- NULL
+
+    for(cond in conditionList){
+      # get the data, & find cutoff
+      curData <- subset(trimmedData, trimmedData$condition == cond)
+      curMean <- mean(curData$rt)
+      curSD <- sd(curData$rt)
+      curCutoff <- curMean + (sd * curSD)
+
+      # trim the data
+      curData <- subset(curData, curData$rt < curCutoff)
+
+      # bind the data
+      tempData <- rbind(tempData, curData)
+    }
+
+    ## now loop over each subject and calculate their average
     # ready the final data set
     finalData <- matrix(0, nrow = length(participant),
                         ncol = length(conditionList))
@@ -150,18 +196,16 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
     # convert to data frame
     finalData <- data.frame(finalData)
 
+    # loop over conditions & subjects and calculate their average
 
-    # loop over all conditions, and over all subjects, and find mean RT
+    # to index over conditions. It starts at 2 because this is the first column
+    # in the data frame containing condition information
+    j <- 2
 
-    j <- 2 # to keep track of conditions looped over. Starts at 2 as this is
-    # where the first condition's column is.
-
-    for(currCondition in conditionList){
+    for(curCondition in conditionList){
 
       # get the current condition's data
-      tempData <- subset(trimmedData, trimmedData$condition == currCondition)
-
-
+      tempData <- subset(trimmedData, trimmedData$condition == curCondition)
 
       #now loop over all participants
       i <- 1
@@ -179,15 +223,14 @@ absoluteSD <- function(data, minRT, sd, omitErrors, returnType = "raw",
         i <- i + 1
       }
 
-
       # update nCondition counter
       j <- j + 1
-
-    } # end of condition loop
+    }
 
     return(finalData)
 
   }
 
-} # end of function
+
+}
 #------------------------------------------------------------------------------
