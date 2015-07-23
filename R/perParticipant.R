@@ -58,6 +58,9 @@ perParticipant <- function(data, minRT, sd, omitErrors = TRUE,
   # get the list of participant numbers
   participant <- unique(trimmedData$participant)
 
+  # get the list of experimental conditions
+  conditionList <- unique(trimmedData$condition)
+
   # trim the data to remove trials below minRT
   trimmedData <- subset(trimmedData, trimmedData$rt > minRT)
 
@@ -76,7 +79,7 @@ perParticipant <- function(data, minRT, sd, omitErrors = TRUE,
 
       # find their mean, sd, & cutoff
       curMean <- mean(curData$rt)
-      curSD <- sd(cur$rt)
+      curSD <- sd(curData$rt)
       curCutoff <- curMean + (stDev * curSD)
 
       # trim the data
@@ -104,7 +107,7 @@ perParticipant <- function(data, minRT, sd, omitErrors = TRUE,
 
       # find their mean, sd, & cutoff
       curMean <- mean(curData$rt)
-      curSD <- sd(cur$rt)
+      curSD <- sd(curData$rt)
       curCutoff <- curMean + (stDev * curSD)
 
       # trim the data
@@ -181,7 +184,7 @@ perParticipant <- function(data, minRT, sd, omitErrors = TRUE,
 
       # find their mean, sd, & cutoff
       curMean <- mean(curData$rt)
-      curSD <- sd(cur$rt)
+      curSD <- sd(curData$rt)
       curCutoff <- curMean + (stDev * curSD)
 
       # trim the data
