@@ -4,7 +4,7 @@
 \alias{perCell}
 \title{Per Cell SD RT trimming}
 \usage{
-perCell(data, minRT, sd, omitErrors = TRUE, returnType = "raw",
+perCell(data, minRT, sd, omitErrors = TRUE, returnType = "mean",
   seconds = FALSE)
 }
 \arguments{

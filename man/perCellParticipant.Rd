@@ -4,7 +4,7 @@
 \alias{perCellParticipant}
 \title{Per Cell Per Participant SD RT trimming}
 \usage{
-perCellParticipant(data, minRT, sd, omitErrors = TRUE, returnType = "raw",
+perCellParticipant(data, minRT, sd, omitErrors = TRUE, returnType = "mean",
   seconds = FALSE)
 }
 \arguments{
