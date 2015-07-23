@@ -33,7 +33,7 @@
 #' @export
 
 perCellParticipant <- function(data, minRT, sd, omitErrors = TRUE,
-                           returnType = "raw", seconds = FALSE){
+                           returnType = "mean", seconds = FALSE){
 
   # change the variable name for sd (as this is an R function)
   stDev <- sd

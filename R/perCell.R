@@ -33,7 +33,7 @@
 #' To do
 #' @export
 
-perCell <- function(data, minRT, sd, omitErrors = TRUE, returnType = "raw",
+perCell <- function(data, minRT, sd, omitErrors = TRUE, returnType = "mean",
                     seconds = FALSE){
 
   # change the variable name for sd (as this is an R function)
