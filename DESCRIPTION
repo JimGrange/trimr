@@ -2,7 +2,7 @@ Package: trimr
 Title: A package of response time trimming methods
 Version: 0.0.0.9000
 Authors@R: "Jim Grange <grange.jim@gmail.com> [aut, cre]"
-Description: trim provides various commonly-used response time
+Description: trimr provides various commonly-used response time
 trimming methods.
 Depends: R (>= 3.1.1)
 License: GPL-3
