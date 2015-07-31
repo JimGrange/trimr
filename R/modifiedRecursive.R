@@ -4,8 +4,7 @@
 #' \code{modifiedRecursive} takes a data frame of RT data and returns trimmed rt
 #' data that fall below a set standard deviation above the each participant's
 #' mean for each condition, with the criterion changing as more trials are
-#' removed.
-#'
+#' removed,  as described in van Selst & Jolicoeur (1994).#'
 #' @param data A data frame. It must contain columns named "participant",
 #' "condition", "rt", and "accuracy". The RT can be in seconds
 #' (e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition" will
@@ -19,8 +18,19 @@
 #' by errors in this case.
 #' @param seconds If set to TRUE, the response time in the data frame is
 #' in seconds; retain as FALSE if your data is in millisecond form.
+#'
+#' @references Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
+#' of sample size on outlier elimination. Quarterly Journal of Experimental
+#' Psychology, 47 (A), 631-650.
+#'
+#'
 #' @examples
-#' To do
+#' # load the example data that ships with trimr
+#' data(exampleData)
+#'
+#' # perform the trimming, returning mean RT
+#' trimmedData <- modifiedRecursive(data = exampleData, minRT = 150)
+#'
 #' @export
 
 modifiedRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
@@ -42,7 +52,7 @@ modifiedRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
   }
 
   # get the list of participant numbers
-  participant <- unique(trimmedData$participant)
+  participant <- sort(unique(trimmedData$participant))
 
   # get the list of experimental conditions
   conditionList <- unique(trimmedData$condition)

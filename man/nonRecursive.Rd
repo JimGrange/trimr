@@ -28,7 +28,8 @@ in seconds; retain as FALSE if your data is in millisecond form.}
 \code{nonRecursive} takes a data frame of RT data and returns trimmed rt
 data that fall below a set standard deviation above the each participant's
 mean for each condition. The SD used for trimming is proportional to the
-number of trials in the data being passed.
+number of trials in the data being passed, as described in van Selst &
+Jolicoeur (1994).
 }
 \examples{
 # load the example data that ships with trimr
@@ -37,5 +38,12 @@ data(exampleData)
 # perform the trimming, returning mean RT
 trimmedData <- absoluteSD(data = exampleData, minRT = 150, sd = 2.5,
 returnType = "mean")
+}
+\references{
+Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
+of sample size on outlier elimination. Quarterly Journal of Experimental
+Psychology, 47 (A), 631-650.
+
+New one.
 }
 

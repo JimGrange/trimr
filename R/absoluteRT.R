@@ -57,7 +57,7 @@ absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
     }
 
   # get the list of participant numbers
-  participant <- unique(trimmedData$participant)
+  participant <- sort(unique(trimmedData$participant))
 
   # get the list of experimental conditions
   conditionList <- unique(trimmedData$condition)

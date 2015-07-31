@@ -4,7 +4,8 @@
 #' \code{nonRecursive} takes a data frame of RT data and returns trimmed rt
 #' data that fall below a set standard deviation above the each participant's
 #' mean for each condition. The SD used for trimming is proportional to the
-#' number of trials in the data being passed.
+#' number of trials in the data being passed, as described in van Selst &
+#' Jolicoeur (1994).
 #'
 #' @param data A data frame. It must contain columns named "participant",
 #' "condition", "rt", and "accuracy". The RT can be in seconds
@@ -24,9 +25,11 @@
 #' data(exampleData)
 #'
 #' # perform the trimming, returning mean RT
-#' trimmedData <- absoluteSD(data = exampleData, minRT = 150, sd = 2.5,
-#' returnType = "mean")
+#' trimmedData <- nonRecursive(data = exampleData, minRT = 150)
 #'
+#' @references Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
+#' of sample size on outlier elimination. Quarterly Journal of Experimental
+#' Psychology, 47 (A), 631-650.
 #'
 #' @export
 
@@ -48,7 +51,7 @@ nonRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
   }
 
   # get the list of participant numbers
-  participant <- unique(trimmedData$participant)
+  participant <- sort(unique(trimmedData$participant))
 
   # get the list of experimental conditions
   conditionList <- unique(trimmedData$condition)

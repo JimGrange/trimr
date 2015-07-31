@@ -15,8 +15,8 @@
 #'
 #' @param data A data frame. It must contain columns named "participant",
 #' "condition", "rt", and "accuracy". The RT can be in seconds
-#' (e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition" will
-#' consist of strings. "accuracy" must be 1 for correct and 0 for error
+#' (e.g., 0.654) or milliseconds (e.g., 654). Condition will consist
+#' of strings. "accuracy" must be 1 for correct and 0 for error
 #' responses.
 #' @param minRT The lower criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
@@ -24,6 +24,8 @@
 #' @param sd The upper criteria for standard deviation cut-off.
 #' @param perCell Set to TRUE if the user wishes the trimming to occur per
 #' cell of the experimental design.
+#' @param perParticipant Set to TRUE if the user wishes the trimming to occur
+#' per participant.
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
 #' by errors in this case.
@@ -41,8 +43,8 @@
 #' # perform the trimming, returning mean RT
 #' trimmedData <- perParticipant(data = exampleData, minRT = 150, sd = 2.5,
 #' returnType = "mean")
+#'
 #' @export
-
 sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
                    omitErrors = TRUE, returnType = "mean", seconds = FALSE){
 
@@ -67,7 +69,7 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
     }
 
     # get the list of participant numbers
-    participant <- unique(trimmedData$participant)
+    participant <- sort(unique(trimmedData$participant))
 
     # get the list of experimental conditions
     conditionList <- unique(trimmedData$condition)
@@ -225,7 +227,7 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
     }
 
     # get the list of participant numbers
-    participant <- unique(trimmedData$participant)
+    participant <- sort(unique(trimmedData$participant))
 
     # get the list of experimental conditions
     conditionList <- unique(trimmedData$condition)
@@ -358,7 +360,7 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
     }
 
     # get the list of participant numbers
-    participant <- unique(trimmedData$participant)
+    participant <- sort(unique(trimmedData$participant))
 
     # get the list of experimental conditions
     conditionList <- unique(trimmedData$condition)
@@ -573,7 +575,7 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
     }
 
     # get the list of participant numbers
-    participant <- unique(trimmedData$participant)
+    participant <- sort(unique(trimmedData$participant))
 
     # get the list of experimental conditions
     conditionList <- unique(trimmedData$condition)
@@ -735,4 +737,5 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
 
 } # end of function
 
+#------------------------------------------------------------------------------
 

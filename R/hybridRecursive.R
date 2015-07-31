@@ -3,7 +3,8 @@
 #'
 #' \code{hybridRecursive} takes a data frame of RT data and returns trimmed rt
 #' data. The returned value is the average returned from the nonRecursive
-#' and the modifiedRecursive procedures
+#' and the modifiedRecursive procedures  as described in van Selst &
+#' Jolicoeur (1994).
 #'
 #' @param data A data frame. It must contain columns named "participant",
 #' "condition", "rt", and "accuracy". The RT can be in seconds
@@ -18,10 +19,19 @@
 #' by errors in this case.
 #' @param seconds If set to TRUE, the response time in the data frame is
 #' in seconds; retain as FALSE if your data is in millisecond form.
+#'
+#' @references Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
+#' of sample size on outlier elimination. Quarterly Journal of Experimental
+#' Psychology, 47 (A), 631-650.
+#'
 #' @examples
-#' To do
+#' # load the example data that ships with trimr
+#' data(exampleData)
+#'
+#' # perform the trimming, returning mean RT
+#' trimmedData <- hybridRecursive(data = exampleData, minRT = 150)
+#'
 #' @export
-
 hybridRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
 
 
@@ -41,7 +51,7 @@ hybridRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
   }
 
   # get the list of participant numbers
-  participant <- unique(trimmedData$participant)
+  participant <- sort(unique(trimmedData$participant))
 
   # get the list of experimental conditions
   conditionList <- unique(trimmedData$condition)
@@ -82,10 +92,10 @@ hybridRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
 
 
       # get the nonRecursive mean
-      nonR <- nonRecursive(tempData$rt)
+      nonR <- nonRecursiveTrim(tempData$rt)
 
       # get the modifiedRecursive mean
-      modR <- modifiedRecursive(tempData$rt)
+      modR <- modifiedRecursiveTrim(tempData$rt)
 
       # find the average, and add to the data frame
       finalData[i, j] <- round(mean(c(nonR, modR)), digits = digits)
