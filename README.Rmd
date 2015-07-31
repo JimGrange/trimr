@@ -1,0 +1,66 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# trimr: Response Time Trimming in R
+
+## Overview
+
+*trimr* is an R package that implements most commonly-used response time trimming methods, allowing the user to go from a raw data file to a finalised data file ready for inferential statistical analysis.
+
+The trimming functions available in *trimr* fall broadly into three families:
+
+1. **Absolute Value Criterion**
+1. **Standard Deviation Criterion**
+1. **Recursive / Moving Criterion**
+
+The latter implements the methods first suggsted by Van Selst & Jolicoeur (1994). 
+
+## Example
+In the example below, we go from a data frame containing data from 32 participants (in total, 20,518 trials) to a trimmed data set showing the mean trimmed RT for each experimental condition & participant using the modified recursive trimming procedure of Van Selst & Jolicoeur (1994):
+
+```{r}
+# load trimr's library
+library(trimr)
+
+# load the example data that ships with trimr
+data(exampleData)
+
+# look at the top of the example raw data
+head(exampleData)
+
+# perform the trimming
+trimmedData <- modifiedRecursive(data = exampleData, minRT = 150, digits = 0)
+
+# look at the trimmedData
+trimmedData
+```
+
+## Installation Instructions
+To install the package from GitHub, you need the devools package:
+
+```{r, eval = FALSE}
+install.packages("devtools")
+library(devtools)
+```
+
+Then *trimr* can be directly installed:
+
+```{r, eval = FALSE}
+devtools::install_github("JimGrange/trimr")
+
+
+## References
+Van Selst, M.,  & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. Quarterly Journal of Experimental Psychology, 47 (A), 631–650.
