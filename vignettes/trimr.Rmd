@@ -43,7 +43,7 @@ Of course, this data is here just for example usage. You would usually be using 
 
 ## absoluteRT
 
-## absoluteSD (to do)
+## absoluteSD 
 
 ## perCell (to do)
 

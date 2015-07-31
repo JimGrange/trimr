@@ -28,8 +28,8 @@
 #' trimmedData <- nonRecursive(data = exampleData, minRT = 150)
 #'
 #' @references Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
-#' of sample size on outlier elimination. Quarterly Journal of Experimental
-#' Psychology, 47 (A), 631-650.
+#' of sample size on outlier elimination. \emph{Quarterly Journal of Experimental
+#' Psychology, 47} (A), 631-650.
 #'
 #' @export
 

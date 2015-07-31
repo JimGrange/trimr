@@ -27,9 +27,19 @@ in seconds; retain as FALSE if your data is in millisecond form.}
 \description{
 \code{hybridRecursive} takes a data frame of RT data and returns trimmed rt
 data. The returned value is the average returned from the nonRecursive
-and the modifiedRecursive procedures
+and the modifiedRecursive procedures  as described in van Selst &
+Jolicoeur (1994).
 }
 \examples{
-To do
+# load the example data that ships with trimr
+data(exampleData)
+
+# perform the trimming, returning mean RT
+trimmedData <- hybridRecursive(data = exampleData, minRT = 150)
+}
+\references{
+Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
+of sample size on outlier elimination. \emph{Quarterly Journal of Experimental
+Psychology, 47} (A), 631-650.
 }
 

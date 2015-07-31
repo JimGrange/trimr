@@ -8,3 +8,5 @@ Depends: R (>= 3.1.1)
 License: GPL-3
 LazyData: true
 URL: www.jimgrange.com
+Suggests: knitr
+VignetteBuilder: knitr

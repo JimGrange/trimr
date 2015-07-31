@@ -21,8 +21,8 @@
 #' in seconds; retain as FALSE if your data is in millisecond form.
 #'
 #' @references Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
-#' of sample size on outlier elimination. Quarterly Journal of Experimental
-#' Psychology, 47 (A), 631-650.
+#' of sample size on outlier elimination. \emph{Quarterly Journal of Experimental
+#' Psychology, 47} (A), 631-650.
 #'
 #' @examples
 #' # load the example data that ships with trimr
