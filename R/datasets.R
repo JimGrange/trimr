@@ -15,3 +15,22 @@
 #'     }
 "exampleData"
 #------------------------------------------------------------------------------
+
+
+#------------------------------------------------------------------------------
+#' SDs used for the recursive / moving criterion trimming methods
+#'
+#' A data frame containing the SDs used for each sample size as trimming
+#' criterion for the nonRecursive function and the modifiedRecursive function
+#'
+#' @format A data frame with 100 rows and 3 columns:
+#' \describe{
+#'     \item{sampleSize}{Sample size of the data set being passed}
+#'     \item{nonRecursive}{The standard deviation to use as the criterion for
+#'     the nonRecursive function}
+#'     \item{modifiedRecursive}{The standard deviation to use as the criterion
+#'     for the modifiedRecursive function}
+#'
+#'     }
+"linearInterpolation"
+#------------------------------------------------------------------------------
