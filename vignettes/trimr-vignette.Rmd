@@ -23,7 +23,7 @@ The trimming functions fall broadly into three families (together with the funct
     *    hybridRecursive
 
 ## Example Data
-*trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has some subjects' data missing (e.g., subject 31 was removed before data analsysis). This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. 
+*trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has data from 32 subjects. This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. 
 
 ```{r}
 # load the trimr package
