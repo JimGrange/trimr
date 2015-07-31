@@ -20,7 +20,14 @@
 #' @param seconds If set to TRUE, the response time in the data frame is
 #' in seconds; retain as FALSE if your data is in millisecond form.
 #' @examples
-#' To do
+#' # load the example data that ships with trimr
+#' data(exampleData)
+#'
+#' # perform the trimming, returning mean RT
+#' trimmedData <- absoluteSD(data = exampleData, minRT = 150, sd = 2.5,
+#' returnType = "mean")
+#'
+#'
 #' @export
 
 nonRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
