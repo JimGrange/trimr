@@ -22,8 +22,8 @@
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' All RTs below this value are removed before proceeding with SD trimming.
 #' @param sd The upper criteria for standard deviation cut-off.
-#' @param perCell Set to TRUE if the user wishes the trimming to occur per
-#' cell of the experimental design.
+#' @param perCondition Set to TRUE if the user wishes the trimming to occur per
+#' condition of the experimental design.
 #' @param perParticipant Set to TRUE if the user wishes the trimming to occur
 #' per participant.
 #' @param omitErrors If set to TRUE, error trials will be removed before
@@ -34,8 +34,7 @@
 #' participant for each experimental condition identified; "median" returns
 #' median response times per participant for each experimental condition
 #' identified.
-#' @param seconds If set to TRUE, the response time in the data frame is
-#' in seconds; retain as FALSE if your data is in millisecond form.
+#' @param digits How many decimal places to round to after trimming?
 #' @examples
 #' # load the example data that ships with trimr
 #' data(exampleData)
@@ -45,11 +44,11 @@
 #' returnType = "mean")
 #'
 #' @export
-sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
-                   omitErrors = TRUE, returnType = "mean", seconds = FALSE){
+sdTrim <- function(data, minRT, sd, perCondition = TRUE, perParticipant = TRUE,
+                   omitErrors = TRUE, returnType = "mean", digits = 3){
 
   ###-------------
-  if(perCell == FALSE & perParticipant == FALSE){
+  if(perCondition == FALSE & perParticipant == FALSE){
     # change the variable name for sd (as this is an R function)
     stDev <- sd
 
@@ -58,14 +57,6 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
       trimmedData <- subset(data, data$accuracy == 1)
     } else {
       trimmedData <- data
-    }
-
-    # if the data is in seconds, then set decimal places to 3, otherwise set it
-    # to 0
-    if(seconds == TRUE){
-      digits <- 3
-    } else {
-      digits <- 0
     }
 
     # get the list of participant numbers
@@ -207,7 +198,8 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
 
 
   ###-------------
-  if(perCell == TRUE & perParticipant == FALSE){
+  if(perCondition == TRUE & perParticipant == FALSE){
+
     # change the variable name for sd (as this is an R function)
     stDev <- sd
 
@@ -218,14 +210,6 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
       trimmedData <- data
     }
 
-    # if the data is in seconds, then set decimal places to 3, otherwise set it
-    # to 0
-    if(seconds == TRUE){
-      digits <- 3
-    } else {
-      digits <- 0
-    }
-
     # get the list of participant numbers
     participant <- sort(unique(trimmedData$participant))
 
@@ -234,7 +218,6 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
 
     # trim the data to remove trials below minRT
     trimmedData <- subset(trimmedData, trimmedData$rt > minRT)
-
 
     ### do "raw"
     if(returnType == "raw"){
@@ -340,7 +323,8 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
 
 
   ###-------------
-  if(perCell == FALSE & perParticipant == TRUE){
+  if(perCondition == FALSE & perParticipant == TRUE){
+
     # change the variable name for sd (as this is an R function)
     stDev <- sd
 
@@ -349,14 +333,6 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
       trimmedData <- subset(data, data$accuracy == 1)
     } else {
       trimmedData <- data
-    }
-
-    # if the data is in seconds, then set decimal places to 3, otherwise set it
-    # to 0
-    if(seconds == TRUE){
-      digits <- 3
-    } else {
-      digits <- 0
     }
 
     # get the list of participant numbers
@@ -555,7 +531,7 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
 
 
   ###-------------
-  if(perCell == TRUE & perParticipant == TRUE){
+  if(perCondition == TRUE & perParticipant == TRUE){
     # change the variable name for sd (as this is an R function)
     stDev <- sd
 
@@ -564,14 +540,6 @@ sdTrim <- function(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
       trimmedData <- subset(data, data$accuracy == 1)
     } else {
       trimmedData <- data
-    }
-
-    # if the data is in seconds, then set decimal places to 3, otherwise set it
-    # to 0
-    if(seconds == TRUE){
-      digits <- 3
-    } else {
-      digits <- 0
     }
 
     # get the list of participant numbers

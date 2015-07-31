@@ -4,8 +4,8 @@
 \alias{sdTrim}
 \title{RT trimming with standard deviation criterion}
 \usage{
-sdTrim(data, minRT, sd, perCell = TRUE, perParticipant = TRUE,
-  omitErrors = TRUE, returnType = "mean", seconds = FALSE)
+sdTrim(data, minRT, sd, perCondition = TRUE, perParticipant = TRUE,
+  omitErrors = TRUE, returnType = "mean", digits = 3)
 }
 \arguments{
 \item{data}{A data frame. It must contain columns named "participant",
@@ -20,8 +20,8 @@ All RTs below this value are removed before proceeding with SD trimming.}
 
 \item{sd}{The upper criteria for standard deviation cut-off.}
 
-\item{perCell}{Set to TRUE if the user wishes the trimming to occur per
-cell of the experimental design.}
+\item{perCondition}{Set to TRUE if the user wishes the trimming to occur per
+condition of the experimental design.}
 
 \item{perParticipant}{Set to TRUE if the user wishes the trimming to occur
 per participant.}
@@ -36,8 +36,7 @@ participant for each experimental condition identified; "median" returns
 median response times per participant for each experimental condition
 identified.}
 
-\item{seconds}{If set to TRUE, the response time in the data frame is
-in seconds; retain as FALSE if your data is in millisecond form.}
+\item{digits}{How many decimal places to round to after trimming?}
 }
 \description{
 \code{sdTrim} takes a data frame of RT data and returns trimmed rt

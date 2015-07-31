@@ -26,8 +26,7 @@
 #' participant for each experimental condition identified; "median" returns
 #' median response times per participant for each experimental condition
 #' identified.
-#' @param seconds If set to TRUE, the response time in the data frame is
-#' in seconds; retain as FALSE if your data is in millisecond form.
+#' @param digits How many decimal places to round to after trimming?
 #' @examples
 #' # load the example data that ships with trimr
 #' data(exampleData)
@@ -39,7 +38,7 @@
 #'
 #' @export
 absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
-                       returnType = "mean", seconds = FALSE){
+                       returnType = "mean", digits = 3){
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
@@ -48,13 +47,6 @@ absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
     trimmedData <- data
   }
 
-  # if the data is in seconds, then set decimal places to 3, otherwise set it
-  # to 0
-  if(seconds == TRUE){
-    digits <- 3
-    } else {
-      digits <- 0
-    }
 
   # get the list of participant numbers
   participant <- sort(unique(trimmedData$participant))

@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "trimr: Response Time Trimming in R"
+author: "James A. Grange"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -8,51 +8,171 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
+## Overview
+*trimr* is an R package that implements most commonly-used response time trimming methods, allowing the user to go from a raw data file to a finalised data file ready for inferential statistical analysis. 
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+The trimming functions fall broadly into three families (together with the function names for each method implemented in *trimr*):
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+1.    **Absolute Value Criterion:**
+    *    absoluteRT
+1.    **Standard Deviation Criterion:**
+    *    sdTrim
+1.    **Recursive / Moving Criterion:**
+    *    nonRecursive
+    *    modifiedRecursive
+    *    hybridRecursive
 
-## Vignette Info
+## Example Data
+*trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has some subjects' data missing (e.g., subject 31 was removed before data analsysis). This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. 
 
-Note the various macros within the `vignette` setion of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+```{r}
+# load the trimr package
+library(trimr)
 
-## Styles
+# activate the data
+data(exampleData)
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+# look at the top of the data
+head(exampleData)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+The exampleData consists of 4 columns:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+* **participant:** Codes the number of each participant in the experiment
+* **condition:** In this example, there are two experimental conditions: "Switch", and "Repeat".
+* **rt:** Logs the response time of the participant in milliseconds.  
+* **accuracy:** Logs the accuracy of the response. 1 codes a correct response, 0 an error response.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+At a minimum, users using their own data need columns with these names in their data frame they are using *trimr* for. The user can use RTs logged in milliseconds (as here) or in seconds (e.g., 0.657). The user can control the number of decimal places to round the trimmed data to.
 
-## More Examples
+*****
+## Absolute Value Criterion
+The absolute value criterion is the simplest of all of the trimming methods available (except of course for having no trimming). An upper- and lower-criterion is set, and any response time that falls outside of these limits are removed. The function that performs this trimming method in *trimr* is called *absoluteRT*.
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+### absoluteRT
+In this function, the user decalares lower- and upper-criterion for RT trimming (minRT and maxRT arguments, respectively); RTs outside of these criteria are removed. Note that these criteria must be in the same unit as the RTs are logged in within the data frame being used. The function also has some other important arguments:
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+* **omitErrors:** If the user wishes error trials to be removed from the trimming, this needs to be set to TRUE (it is set to this by default). Alternatively, some users may wish to keep error trials included. Therefore, set this argument to FALSE.
+* **returnType:** Here, the user can control how the data are returned. "raw" returns trial-level data after the trials with trimmed RTs are removed; "mean" returns calculated mean RT per participant per condition after trimming; "median" returns calculated median RT per participant per condition after trimming. This is set to "mean" by default.
+* **digits:** How many digits to round the data to after trimming? If the user has a data frame where the RTs are recorded in seconds (e.g., 0.657), this argument can be left at its default value of 3. However, if the data are logged in milliseconds, it might be best to change this argument to zero, so there are no decimal places in the rounding of RTs (e.g., 657).
+
+In this first example, let's trim the data using criteria of RTs less than 150 milliseconds and greater than 2,000 milliseconds, with error trials removed before trimming commences. Let's also return the mean RTs for each condition, and round the data to zero decimal places.
+
+```{r}
+# perform the trimming
+trimmedData <- absoluteRT(data = exampleData, minRT = 150, maxRT = 2000, 
+                          digits = 0)
+
+# look at the top of the data
+head(trimmedData)
 ```
 
-Also a quote using `>`:
+Note that *trimr* returns a data frame with each row representing each participant in the data file (logged in the participant column), and separate columns for each experimental condition in the data.
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+If the user wishes to recive back trial-level data, change the "returnType" argument to "raw":
+
+```{r}
+# perform the trimming
+trimmedData <- absoluteRT(data = exampleData, minRT = 150, maxRT = 2000, 
+                          returnType = "raw", digits = 0)
+
+# look at the top of the data
+head(trimmedData)
+```
+
+Now, the data frame returned is in the same shape as the initial data file, but rows containing trimmed RTs are removed.
+
+*****
+## Standard Deviation Criterion
+This trimming method uses a standard deviation multiplier as the upper criterion for RT removal (users still need to enter a lower-bound manually). For example, this method can be used to trim all RTs 2.5 standard deviations above the mean RT. This trimming can be done per condition (e.g., 2.5 SDs above the mean of each condition), per participant (e.g., 2.5 SDs above the mean of each participant), or per condition per participant (e.g., 2.5 SDs above the mean of each participant for each condition). 
+
+
+### sdTrim
+In this function, the user delcares a lower-bound on RT trimming (e.g., 150 milliseconds) and an upper-bound in standard deviations. The value of standard deviation used is set by the SD argument. How this is used varies depending on the values the user passes to two important function arguments:
+
+* **perCondition:** If set to TRUE, the trimming will occur above the mean of each experimental condition in the data file.
+* **perParticipant:** If set to TRUE, the trimming will occur above the mean of each participant in the data file.
+
+Note that if both are set to TRUE, the trimming will occur per participant per condition (e.g., if SD is set to 2.5, the function will trim RTs 2.5 SDs above the mean RT of each participant for each condition).
+
+In this example, let's trim RTs faster than 150 milliseconds, and greater than 3 SDs above the mean of each participant, and return the mean RTs:
+
+```{r}
+# trim the data
+trimmedData <- sdTrim(data = exampleData, minRT = 150, sd = 3, 
+                      perCondition = FALSE, perParticipant = TRUE, 
+                      returnType = "mean", digits = 0)
+
+# look at the top of the data
+head(trimmedData)
+```
+
+Now, let's trim per condition per participant:
+
+```{r}
+# trim the data
+trimmedData <- sdTrim(data = exampleData, minRT = 150, sd = 3, 
+                      perCondition = TRUE, perParticipant = TRUE, 
+                      returnType = "mean", digits = 0)
+
+# look at the top of the data
+head(trimmedData)
+```
+
+*****
+## Recursive / Moving Criterion
+Three functions in this family implement the trimming methods proposed & discussed by van Selst & Jolicoeur (1994): **nonRecursive**, **modifiedRecursive**, and **hybridRecursive**. van Selst & Jolicoeur noted that the outcome of many trimming methods is influenced by the sample size (i.e., the number of trials) being considered, thus potentially producing bias. For example, even if RTs are drawn from identical positively-skewed distributions, a “per condition per participant” SD procedure (see sdTrim above) would result in a higher mean estimate for small sample sizes than larger sample sizes. This bias was shown to be removed when a “moving criterion” (MC) was used; this is where the SD used for trimming is  adapted to the sample size being considered.
+
+### nonRecursive
+The non-recursive method proposed by van Selst & Jolicoeur (1994) is very similar to the standard deviation method outlined above with the exception that the user does not specify the SD to use as the upper bound. The SD used for the upper bound is rather decided by the sample size of the RTs being passed to the trimming function, with larger SDs being used for larger sample sizes. Also, the function only trims per participant per condition.
+
+The **nonRecursive** function checks the sample size of the data being passed to it, and looks up the SD criterion required for the data's sample size. The function looks in a data file contained in *trimr* called **linearInterpolation**. Should the user wish to see this data file (although the user will never need to access it if they are not interested), type:
+
+```{r}
+# load the data
+data(linearInterpolation)
+
+# show the first 20 rows (there are 100 in total)
+linearInterpolation[1:20, ]
+```
+
+Notice there are two columns. This current function will only look in the nonRecursive column; the other column is used by the modifiedRecursive function, discussed below. If the sample size of the current set of data is 16 RTs (for example), the function will use an upper SD criterion of 2.359, and will proceed much like the sdTrim function's operations. 
+
+Note the user can only be returned the mean trimmed RTs (i.e., there is no "returnType" argument for this function).
+
+```{r}
+# trim the data
+trimmedData <- nonRecursive(data = exampleData, minRT = 150, digits = 0)
+
+# see the top of the data
+head(trimmedData)
+```
+
+### modifiedRecursive
+The modifiedRecursive function is more involved than the nonRecursive function. This function performs trimming in cycles. It first temporarily removes the slowest RT from the distribution; then, the mean of the sample is calculated, and the cut-off value is calculated using a certain number of SDs around the mean, with the value for SD being determined by the current sample size. In this procedure, required SD *decreases* with increased sample size (cf., the nonRecursive method, with *increasing* SDs with increasing sample size; see the linearInterpolation data file above); see Van Selst and Jolicoeur (1994) for justification. 
+
+The temporarily removed RT is then returned to the sample, and the fastest and slowest RTs are then compared to the cut-off, and removed if they fall outside. This process is then repeated until no outliers remain, or until the sample size drops below four. The SD used for the cut-off is thus *dynamically altered* based on the sample size of each cycle of the procedure, rather than static like the nonRecursive method. 
+
+```{r}
+# trim the data
+trimmedData <- modifiedRecursive(data = exampleData, minRT = 150, digits = 0)
+
+# see the top of the data
+head(trimmedData)
+```
+
+### hybridRecursive
+van Selst and Jolicoeur (1994) reported slight opposing trends of the non-recursive and modified-recursive trimming methods (see page 648, footnote 2). They therefore, in passing, suggested a "hybrid-recursive" method might balance the opposing trends. The hybrid-recursive method simply takes the average of the non-recursive and the modified-recursive methods. 
+
+```{r}
+# trim the data
+trimmedData <- hybridRecursive(data = exampleData, minRT = 150, digits = 0)
+
+# see the top of the data
+head(trimmedData)
+```
+
+
+*****
+## References
+Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. *Quarterly Journal of Experimental Psychology, 47 (A)*, 631--650.

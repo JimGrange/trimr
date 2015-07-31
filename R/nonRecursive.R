@@ -18,8 +18,7 @@
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
 #' by errors in this case.
-#' @param seconds If set to TRUE, the response time in the data frame is
-#' in seconds; retain as FALSE if your data is in millisecond form.
+#' @param digits How many decimal places to round to after trimming?
 #' @examples
 #' # load the example data that ships with trimr
 #' data(exampleData)
@@ -33,21 +32,13 @@
 #'
 #' @export
 
-nonRecursive <- function(data, minRT, omitErrors = TRUE, seconds = FALSE){
+nonRecursive <- function(data, minRT, omitErrors = TRUE, digits = 3){
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
     trimmedData <- subset(data, data$accuracy == 1)
   } else {
     trimmedData <- data
-  }
-
-  # if the data is in seconds, then set decimal places to 3, otherwise set it
-  # to 0
-  if(seconds == TRUE){
-    digits <- 3
-  } else {
-    digits <- 0
   }
 
   # get the list of participant numbers

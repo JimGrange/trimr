@@ -5,7 +5,7 @@
 \title{Absolute RT trimming}
 \usage{
 absoluteRT(data, minRT, maxRT, omitErrors = TRUE, returnType = "mean",
-  seconds = FALSE)
+  digits = 3)
 }
 \arguments{
 \item{data}{A data frame. It must contain columns named "participant",
@@ -30,8 +30,7 @@ participant for each experimental condition identified; "median" returns
 median response times per participant for each experimental condition
 identified.}
 
-\item{seconds}{If set to TRUE, the response time in the data frame is
-in seconds; retain as FALSE if your data is in millisecond form.}
+\item{digits}{How many decimal places to round to after trimming?}
 }
 \description{
 \code{absoluteRT} takes a data frame of RT data and returns trimmed rt data

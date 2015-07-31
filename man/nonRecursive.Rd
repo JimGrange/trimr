@@ -4,7 +4,7 @@
 \alias{nonRecursive}
 \title{nonRecursive trimming procedure.}
 \usage{
-nonRecursive(data, minRT, omitErrors = TRUE, seconds = FALSE)
+nonRecursive(data, minRT, omitErrors = TRUE, digits = 3)
 }
 \arguments{
 \item{data}{A data frame. It must contain columns named "participant",
@@ -21,8 +21,7 @@ All RTs below this value are removed before proceeding with SD trimming.}
 conducting trimming procedure. Final data returned will not be influenced
 by errors in this case.}
 
-\item{seconds}{If set to TRUE, the response time in the data frame is
-in seconds; retain as FALSE if your data is in millisecond form.}
+\item{digits}{How many decimal places to round to after trimming?}
 }
 \description{
 \code{nonRecursive} takes a data frame of RT data and returns trimmed rt
