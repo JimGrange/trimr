@@ -1,4 +1,4 @@
-## Test environment
+## Test environments
 * local Windows 7 install, R 3.1.1
 * local Mac OS X v.10.9.5, R 3.1.1
 
