@@ -42,9 +42,15 @@ overall mean; i.e., ignoring condition).
 \details{
 By passing a data frame containing raw response time data, together with
 trimming criteria, the function will return trimmed data, either in the form
-of trial-level data or in the form of means/medians.
+of trial-level data or in the form of means/medians for each subject &
+condition.
 }
 \examples{
-To do
+# load the example data that ships with trimr
+data(exampleData)
+
+# perform the trimming, returning mean RT
+trimmedData <- perParticipant(data = exampleData, minRT = 150, sd = 2.5,
+returnType = "mean")
 }
 

@@ -4,7 +4,7 @@
 \alias{absoluteRT}
 \title{Absolute RT trimming}
 \usage{
-absoluteRT(data, minRT, maxRT, omitErrors = TRUE, returnType = "raw",
+absoluteRT(data, minRT, maxRT, omitErrors = TRUE, returnType = "mean",
   seconds = FALSE)
 }
 \arguments{
@@ -40,9 +40,15 @@ that fall between set minimum and maximum limits.
 \details{
 By passing a data frame containing raw response time data, together with
 trimming criteria, the function will return trimmed data, either in the form
-of trial-level data or in the form of means/medians.
+of trial-level data or in the form of means/medians for each subject &
+condition.
 }
 \examples{
-To do
+# load the example data that ships with trimr
+data(exampleData)
+
+# perform the trimming, returning mean RT
+trimmedData <- absoluteRT(data = exampleData, minRT = 150, maxRT = 2500,
+returnType = "mean")
 }
 

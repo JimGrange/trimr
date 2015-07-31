@@ -7,7 +7,8 @@
 #'
 #' By passing a data frame containing raw response time data, together with
 #' trimming criteria, the function will return trimmed data, either in the form
-#' of trial-level data or in the form of means/medians.
+#' of trial-level data or in the form of means/medians for each subject &
+#' condition.
 #'
 #' @param data A data frame. It must contain columns named "participant",
 #' "condition", "rt", and "accuracy". The RT can be in seconds
@@ -29,10 +30,15 @@
 #' @param seconds If set to TRUE, the response time in the data frame is
 #' in seconds; retain as FALSE if your data is in millisecond form.
 #' @examples
-#' To do
+#' # load the example data that ships with trimr
+#' data(exampleData)
+#'
+#' # perform the trimming, returning mean RT
+#' trimmedData <- absoluteSD(data = exampleData, minRT = 150, sd = 2.5,
+#' returnType = "mean")
 #' @export
 
-absoluteSD <- function(data, minRT, sd, omitErrors = TRUE, returnType = "raw",
+absoluteSD <- function(data, minRT, sd, omitErrors = TRUE, returnType = "mean",
                        seconds = FALSE){
 
 
