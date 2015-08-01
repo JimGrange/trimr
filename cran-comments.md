@@ -4,7 +4,7 @@
 * win-builder
 
 ## R CMD Check Results
-There were no ERRORs, WARNINGs, or NOTES.
+There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Win-Builder Test
 There were two NOTES:

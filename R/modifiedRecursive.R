@@ -4,7 +4,7 @@
 #' \code{modifiedRecursive} takes a data frame of RT data and returns trimmed rt
 #' data that fall below a set standard deviation above the each participant's
 #' mean for each condition, with the criterion changing as more trials are
-#' removed,  as described in van Selst & Jolicoeur (1994).#'
+#' removed,  as described in van Selst & Jolicoeur (1994).
 #' @param data A data frame. It must contain columns named "participant",
 #' "condition", "rt", and "accuracy". The RT can be in seconds
 #' (e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition" will
