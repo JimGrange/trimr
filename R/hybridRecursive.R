@@ -30,6 +30,8 @@
 #' # perform the trimming, returning mean RT
 #' trimmedData <- hybridRecursive(data = exampleData, minRT = 150)
 #'
+#' @importFrom stats sd
+#'
 #' @export
 hybridRecursive <- function(data, minRT, omitErrors = TRUE, digits = 3){
 

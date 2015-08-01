@@ -30,6 +30,8 @@
 #' # perform the trimming, returning mean RT
 #' trimmedData <- modifiedRecursive(data = exampleData, minRT = 150)
 #'
+#' @importFrom stats sd
+#'
 #' @export
 
 modifiedRecursive <- function(data, minRT, omitErrors = TRUE, digits = 3){

@@ -30,6 +30,8 @@
 #' of sample size on outlier elimination. \emph{Quarterly Journal of Experimental
 #' Psychology, 47} (A), 631-650.
 #'
+#' @importFrom stats sd
+#'
 #' @export
 
 nonRecursive <- function(data, minRT, omitErrors = TRUE, digits = 3){

@@ -43,6 +43,8 @@
 #' trimmedData <- sdTrim(data = exampleData, minRT = 150, sd = 2.5,
 #' perCondition = TRUE, perParticipant = FALSE, returnType = "mean")
 #'
+#' @importFrom stats median sd
+#'
 #' @export
 sdTrim <- function(data, minRT, sd, perCondition = TRUE, perParticipant = TRUE,
                    omitErrors = TRUE, returnType = "mean", digits = 3){

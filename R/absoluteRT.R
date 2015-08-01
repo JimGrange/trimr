@@ -35,6 +35,8 @@
 #' trimmedData <- absoluteRT(data = exampleData, minRT = 150, maxRT = 2500,
 #' returnType = "mean")
 #'
+#' @importFrom stats median sd
+#'
 #'
 #' @export
 absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
