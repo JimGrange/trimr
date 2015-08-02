@@ -27,7 +27,7 @@ by errors in this case.}
 \code{modifiedRecursive} takes a data frame of RT data and returns trimmed rt
 data that fall below a set standard deviation above the each participant's
 mean for each condition, with the criterion changing as more trials are
-removed,  as described in van Selst & Jolicoeur (1994).#'
+removed,  as described in van Selst & Jolicoeur (1994).
 }
 \examples{
 # load the example data that ships with trimr

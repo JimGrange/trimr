@@ -1,7 +1,12 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* ALtered the description entry in the DESCRIPTION file to begin with "Provides...".
+
 ## Test Environments
 * local Windows 7 install, R 3.2.1
 * local Mac OS X v.10.9.5, R 3.1.1
-* win-builder
+* win-builder (devel and release)
 
 ## R CMD Check Results
 There were no ERRORs, WARNINGs, or NOTEs.
@@ -17,7 +22,3 @@ There were highlights regarding "Possibly mis-spelled words in DESCRIPTION":
 
 * "Jolicoeur (7:19)" - This is a name, and is spelled correctly.
 * "Selst (7:9)" - This is a name, and is spelled correctly.
-
-There was also one further comment worth mention:
-
-* "The Description field should not start with the package name": The DESCRIPTION starts with "This package...", so source of this comment is unclear.

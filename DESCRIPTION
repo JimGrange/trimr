@@ -2,7 +2,7 @@ Package: trimr
 Version: 1.0.0
 Authors@R: person("James", "Grange", ,"grange.jim@gmail.com",  c("aut", "cre"))
 Title: An Implementation of Common Response Time Trimming Methods
-Description: This package provides various commonly-used response time trimming
+Description: Provides various commonly-used response time trimming
     methods, including the recursive / moving-criterion methods reported by
     Van Selst and Jolicoeur (1994). By passing trimming functions raw data files,
     the package will return trimmed data ready for inferential testing.
