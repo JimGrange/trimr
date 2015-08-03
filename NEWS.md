@@ -1,3 +1,7 @@
+trimr 1.0.0.9000
+===========
+
+
 trimr 1.0.0
 ===========
 * Vignettes added
