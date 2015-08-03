@@ -16,6 +16,24 @@ knitr::opts_chunk$set(
 
 # trimr: Response Time Trimming in R
 
+## Installation
+
+A stable release of *trimr* [is available on CRAN](https://cran.r-project.org/web/packages/trimr/). To install this, use:
+
+```{r, eval = FALSE}
+install.packages("trimr")
+```
+
+To install the latest version of *trimr* (i.e., the development version of next release), install devtools, and install directly from GitHub by using:
+
+```{r, eval = FALSE}
+# install devtools
+install.packages("devtools")
+
+# install trimr from GitHub
+devools::install_github("JimGrange/trimr")
+```
+
 ## Overview
 
 *trimr* is an R package that implements most commonly-used response time trimming methods, allowing the user to go from a raw data file to a finalised data file ready for inferential statistical analysis.

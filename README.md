@@ -1,6 +1,25 @@
 trimr: Response Time Trimming in R
 ==================================
 
+Installation
+------------
+
+A stable release of *trimr* [is available on CRAN](https://cran.r-project.org/web/packages/trimr/). To install this, use:
+
+``` r
+install.packages("trimr")
+```
+
+To install the latest version of *trimr* (i.e., the development version of next release), install devtools, and install directly from GitHub by using:
+
+``` r
+# install devtools
+install.packages("devtools")
+
+# install trimr from GitHub
+devools::install_github("JimGrange/trimr")
+```
+
 Overview
 --------
 
@@ -19,7 +38,7 @@ Example
 
 In the example below, we go from a data frame containing data from 32 participants (in total, 20,518 trials) to a trimmed data set showing the mean trimmed RT for each experimental condition & participant using the modified recursive trimming procedure of Van Selst & Jolicoeur (1994):
 
-``` {.r}
+``` r
 # load trimr's library
 library(trimr)
 
@@ -81,17 +100,18 @@ Installation Instructions
 
 To install the package from GitHub, you need the devools package:
 
-``` {.r}
+``` r
 install.packages("devtools")
 library(devtools)
 ```
 
 Then *trimr* can be directly installed:
 
-``` {.r}
+``` r
 devtools::install_github("JimGrange/trimr")
-
-
-## References
-Van Selst, M.,  & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. Quarterly Journal of Experimental Psychology, 47 (A), 631–650.
 ```
+
+References
+----------
+
+Van Selst, M., & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. Quarterly Journal of Experimental Psychology, 47 (A), 631–650.
