@@ -112,6 +112,13 @@ modifiedRecursiveTrim <- function(data){
   # repeat the following
   repeat{
 
+
+    # the data needs to have more than 2 RTs in order to function.
+    # (thanks to Ayala Allon for noticing this.)
+    if(length(data) <= 2){
+      break
+    }
+
     ### get the parameters for the moving criterion
 
     # get the sample size of the data
@@ -175,8 +182,13 @@ modifiedRecursiveTrim <- function(data){
 
   } # end of repeat loop
 
-  # now compute the mean of the final data set
-  finalData <- mean(data)
+  # now compute the mean of the final data set. If there are only two RTs,
+  # then return NA
+  if(length(data) == 2){
+    finalData <- NA
+  } else {
+    finalData <- mean(data)
+  }
 
   # return the data
   return(finalData)
