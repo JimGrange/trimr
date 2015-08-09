@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 # trimr: Response Time Trimming in R
 
+For a detailed overview of how to use *trimr*, please see the vignettes.
+
 ## Installation
 
 A stable release of *trimr* [is available on CRAN](https://cran.r-project.org/web/packages/trimr/). To install this, use:

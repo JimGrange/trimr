@@ -1,6 +1,8 @@
 trimr: Response Time Trimming in R
 ==================================
 
+For a detailed overview of how to use *trimr*, please see the vignettes.
+
 Installation
 ------------
 
