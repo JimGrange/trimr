@@ -23,7 +23,7 @@ The trimming functions fall broadly into three families (together with the funct
     *    hybridRecursive
 
 ## Example Data
-*trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has data from 32 subjects. This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. 
+*trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has data from 32 subjects. This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. **(If you have data from a factorial design (i.e., the condition codes are spread over more than one column), then please see the final section of this vignette for how to deal with this in *trimr*).**
 
 ```{r}
 # load the trimr package
@@ -172,6 +172,69 @@ trimmedData <- hybridRecursive(data = exampleData, minRT = 150, digits = 0)
 head(trimmedData)
 ```
 
+
+## Data from Factorial Designs
+In the example data that ships with *trimr*, the RT data comes from just two conditions (Switch vs. Repeat), which are coded in the column "condition". However, in experimental psychology, factorial designs are prevalent, where RT data comes from more than one independent variable, with each IV having multiple levels. How can *trimr* deal with this format?
+
+First, let's re-shape the exampleData set to how data might be stored from a factorial design. Let there be two IVs, each with two levels:
+
+1. **taskSequence:** Switch vs. Repeat
+1. **reward:** Reward vs. NoReward
+
+The *taskSequence* factor is coding whether the task has Switched or Repeated from the task on the previous trial (as before). The *reward* factor is coding whether the participant was presented with a reward or not on the current trial (presented randomly). Let's reshape our data frame to match this fictitious experimental scenario:
+
+```{r}
+# get the example data that ships with trimr
+data(exampleData)
+
+# pass it to a new variable
+newData <- exampleData
+
+# add a column called "taskSequence" that logs whether the current task was a 
+# repetition or a switch trial (which is currently coded in the "condition")
+# column
+newData$taskSequence <- newData$condition
+
+# add a column called "reward" that logs whether the participant received a 
+# reward or not. Fill it with random entries, just for example. This uses R's
+# "sample" function
+newData$reward <- sample(c("Reward", "NoReward"), nrow(newData), 
+                         replace = TRUE)
+
+# delete the "condition" column
+newData <- subset(newData, select = -condition)
+
+# now let's look at our new data
+head(newData)
+```
+
+This now looks how data typically comes in from a factorial design. Now, to get
+*trimr* to work on this, we need to create a new column called "condition", and 
+to place in this column the levels of all factors in the design. For example,
+if the first trial in our newData has taskSequence = Switch and 
+reward = NoReward, we would like our condition entry for this trial to read
+"Switch_NoReward". This is simple to do using R's "paste" function. (Note that
+this code can be adapted to deal with any number of factors.)
+
+```{r}
+# add a new column called "condition", and fill it with information from both 
+# columns that code for our factors
+newData$condition <- paste(newData$taskSequence, "_", newData$reward, sep = "")
+
+# let's again look at the data
+head(newData)
+```
+
+Now we can pass this data frame to trimr, and it will work perfectly.
+
+```{r}
+# trim the data
+trimmedData <- sdTrim(newData, minRT = 150, sd = 2.5)
+
+# check it worked
+head(trimmedData)
+
+```
 
 *****
 ## References
