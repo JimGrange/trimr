@@ -22,6 +22,9 @@ The trimming functions fall broadly into three families (together with the funct
     *    modifiedRecursive
     *    hybridRecursive
 
+## Using Your Own Data
+Of course, you would like to use *trimr* on your own data. Below are some demonstrations on how to use *trimr* that utilise some data that comes with the package. **It's important to note that if you are using your own data, your data MUST contain columns with the same names as used below; names in R are case-sensitive, so make sure the case is the same, too.** You can have other columns in your data file (which will just be ignored by *trimr*), but the relevant columns that code for participant, condition, rt, and accuracy must be names accordingly. 
+
 ## Example Data
 *trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has data from 32 subjects. This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. **(If you have data from a factorial design (i.e., the condition codes are spread over more than one column), then please see the final section of this vignette for how to deal with this in *trimr*).**
 
