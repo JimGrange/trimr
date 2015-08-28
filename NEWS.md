@@ -1,6 +1,11 @@
 ---
 output: html_document
 ---
+
+trimr 1.0.1.9000
+===========
+Development version
+
 trimr 1.0.1
 ===========
 Minor release to fix a could of minor issues:
