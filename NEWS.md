@@ -1,10 +1,14 @@
 ---
 output: html_document
 ---
-trimr 1.0.0.9000
+trimr 1.0.1
 ===========
+Minor release to fix a could of minor issues:
+
 * Updated modifiedRecursive function to avoid bug if only two response times
-   are passed to the function. (Thanks to Ayala Allon for noticing this bug.)
+   are passed to the function.
+
+* Corrected the linearInterpolation data file. 
 
 trimr 1.0.0
 ===========
