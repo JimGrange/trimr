@@ -4,7 +4,7 @@
 \name{linearInterpolation}
 \alias{linearInterpolation}
 \title{SDs used for the recursive / moving criterion trimming methods}
-\format{A data frame with 100 rows and 3 columns:
+\format{A data frame with 97 rows and 3 columns:
 \describe{
     \item{sampleSize}{Sample size of the data set being passed}
     \item{nonRecursive}{The standard deviation to use as the criterion for
