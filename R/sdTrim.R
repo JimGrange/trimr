@@ -578,7 +578,7 @@ sdTrim <- function(data, minRT, sd, perCondition = TRUE, perParticipant = TRUE,
           curData <- subset(tempData, tempData$rt < curCutoff)
 
           # store the data
-          rbind(finalData, curData)
+          finalData <- rbind(finalData, curData)
         }
       }
 
