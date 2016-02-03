@@ -22,7 +22,7 @@ To install the latest version of *trimr* (i.e., the development version of next 
 install.packages("devtools")
 
 # install trimr from GitHub
-devools::install_github("JimGrange/trimr")
+devtools::install_github("JimGrange/trimr")
 ```
 
 Overview
