@@ -23,7 +23,7 @@ The trimming functions fall broadly into three families (together with the funct
     *    hybridRecursive
 
 ## Using Your Own Data
-Of course, you would like to use *trimr* on your own data. Below are some demonstrations on how to use *trimr* that utilise some data that comes with the package. **It's important to note that if you are using your own data, your data MUST contain columns with the same names as used below; names in R are case-sensitive, so make sure the case is the same, too.** You can have other columns in your data file (which will just be ignored by *trimr*), but the relevant columns that code for participant, condition, rt, and accuracy must be names accordingly. 
+Of course, you would like to use *trimr* on your own data. Below are some demonstrations on how to use *trimr* that utilise some data that comes with the package. **In previous versions of trimr your data had to contain columns with the same names used below.** However, you can now specify your own column names. The default values are the old required values meaning no code written for previous versions of trimr will be broken by this change. You can have other columns in your data file (which will just be ignored by *trimr*).
 
 ## Example Data
 *trimr* ships with some example data---"exampleData"---that the user can explore the trimming functions with. This data is simulated (i.e., not real), and has data from 32 subjects. This data is from a task switching experiment, where RT and accuracy was recorded for two experimental conditions: Switch, when the task switched from the previous trial, and Repeat, when the task repeated from the previous trial. **(If you have data from a factorial design (i.e., the condition codes are spread over more than one column), then please see the final section of this vignette for how to deal with this in *trimr*).**
@@ -46,7 +46,16 @@ The exampleData consists of 4 columns:
 * **rt:** Logs the response time of the participant in milliseconds.  
 * **accuracy:** Logs the accuracy of the response. 1 codes a correct response, 0 an error response.
 
-At a minimum, users using their own data need columns with these names in their data frame they are using *trimr* for. The user can use RTs logged in milliseconds (as here) or in seconds (e.g., 0.657). The user can control the number of decimal places to round the trimmed data to.
+If these columns had different names from the defaults these can be specified, for example:
+
+```{r, eval = F}
+# perform the trimming
+trimmedData <- absoluteRT(data = exampleData, 
+                          ppt.var = "id", cond.var = "cond", rt.var = "RT", acc.var = "correct", 
+                          minRT = 150, maxRT = 2000, digits = 0)
+```
+
+The user can use RTs logged in milliseconds (as here) or in seconds (e.g., 0.657). The user can control the number of decimal places to round the trimmed data to.
 
 *****
 ## Absolute Value Criterion
