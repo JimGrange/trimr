@@ -39,8 +39,9 @@
 #'
 #'
 #' @export
-absoluteRT <- function(data, ppt.var = "participant", cond.var = "condition", rt.var = "rt", acc.var = "accuracy", minRT, maxRT, omitErrors = TRUE,
-                            returnType = "mean", digits = 3){
+absoluteRT <- function(data, minRT, maxRT,
+                       ppt.var = "participant", cond.var = "condition", rt.var = "rt", acc.var = "accuracy",
+                       omitErrors = TRUE, returnType = "mean", digits = 3){
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
@@ -49,7 +50,6 @@ absoluteRT <- function(data, ppt.var = "participant", cond.var = "condition", rt
     trimmedData <- data
   }
 
-
   # get the list of participant numbers
   participant <- unique(data[[ppt.var]])
 
@@ -57,7 +57,6 @@ absoluteRT <- function(data, ppt.var = "participant", cond.var = "condition", rt
   conditionList <- unique(data[, cond.var])
 
   # trim the data
-
   trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT & trimmedData[[rt.var]] < maxRT, ]
 
   # if the user asked for trial-level data, then just return what we have
