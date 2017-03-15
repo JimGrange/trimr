@@ -33,37 +33,37 @@
 #' @importFrom stats sd
 #'
 #' @export
-hybridRecursive <- function(data, minRT, omitErrors = TRUE, digits = 3){
+hybridRecursive <- function(data, minRT,
+                            ppt.var = "participant", cond.var = "condition", rt.var = "rt", acc.var = "accuracy",
+                            omitErrors = TRUE, digits = 3){
 
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
-    trimmedData <- subset(data, data$accuracy == 1)
+    trimmedData <- data[data[[acc.var]] == 1, ]
   } else {
     trimmedData <- data
   }
 
   # get the list of participant numbers
-  participant <- sort(unique(trimmedData$participant))
+  participant <- unique(data[[ppt.var]])
 
   # get the list of experimental conditions
-  conditionList <- unique(trimmedData$condition)
+  conditionList <- unique(data[, cond.var])
 
-  # trim the data to remove trials below minRT
-  trimmedData <- subset(trimmedData, trimmedData$rt > minRT)
+  # trim the data
+  trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT, ]
 
   # ready the final data set
-  finalData <- matrix(0, nrow = length(participant),
-                      ncol = length(conditionList))
+  # make a df here to preserve ppt column
+  finalData <- as.data.frame(matrix(0, nrow = length(participant),
+                                    ncol = length(conditionList)))
 
   # give the columns the condition names
   colnames(finalData) <- conditionList
 
   # add the participant column
   finalData <- cbind(participant, finalData)
-
-  # convert to data frame
-  finalData <- data.frame(finalData)
 
   # intialise looping variable for subjects
   i <- 1
@@ -80,15 +80,15 @@ hybridRecursive <- function(data, minRT, omitErrors = TRUE, digits = 3){
     for(currCond in conditionList){
 
       # get the relevant data
-      tempData <- subset(trimmedData, trimmedData$participant == currSub &
-                           trimmedData$condition == currCond)
+      tempData <- trimmedData[trimmedData[[ppt.var]] == currSub &
+                                trimmedData[[cond.var]] == currCond, ]
 
 
       # get the nonRecursive mean
-      nonR <- nonRecursiveTrim(tempData$rt)
+      nonR <- nonRecursiveTrim(tempData[[rt.var]])
 
       # get the modifiedRecursive mean
-      modR <- modifiedRecursiveTrim(tempData$rt)
+      modR <- modifiedRecursiveTrim(tempData[[rt.var]])
 
       # find the average, and add to the data frame
       finalData[i, j] <- round(mean(c(nonR, modR)), digits = digits)
