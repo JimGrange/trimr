@@ -13,3 +13,4 @@ LazyData: true
 URL: www.jimgrange.com
 Suggests: knitr
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1
