@@ -15,6 +15,11 @@
 #' @param minRT The lower criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' All RTs below this value are removed before proceeding with SD trimming.
+#' @param ppt.var The quoted name of the column in the data that identifies participants.
+#' @param cond.var The quoted name of the column in the data that includes the conditions.
+#' @param rt.var The quoted name of the column in the data containing reaction times.
+#' @param acc.var The quoted name of the column in the data containing accuracy,
+#' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
 #' by errors in this case.
@@ -34,9 +39,14 @@
 #'
 #' @export
 
-nonRecursive <- function(data, minRT,
-                         ppt.var = "participant", cond.var = "condition", rt.var = "rt", acc.var = "accuracy",
-                         omitErrors = TRUE, digits = 3){
+nonRecursive <- function(data,
+                         minRT,
+                         ppt.var = "participant",
+                         cond.var = "condition",
+                         rt.var = "rt",
+                         acc.var = "accuracy",
+                         omitErrors = TRUE,
+                         digits = 3) {
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){

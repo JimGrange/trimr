@@ -22,6 +22,11 @@
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' All RTs below this value are removed before proceeding with SD trimming.
 #' @param sd The upper criteria for standard deviation cut-off.
+#' @param ppt.var The quoted name of the column in the data that identifies participants.
+#' @param cond.var The quoted name of the column in the data that includes the conditions.
+#' @param rt.var The quoted name of the column in the data containing reaction times.
+#' @param acc.var The quoted name of the column in the data containing accuracy,
+#' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param perCondition Set to TRUE if the user wishes the trimming to occur per
 #' condition of the experimental design.
 #' @param perParticipant Set to TRUE if the user wishes the trimming to occur
@@ -46,9 +51,18 @@
 #' @importFrom stats median sd
 #'
 #' @export
-sdTrim <- function(data, minRT, sd,
-                   ppt.var = "participant", cond.var = "condition", rt.var = "rt", acc.var = "accuracy",
-                   perCondition = TRUE, perParticipant = TRUE, omitErrors = TRUE, returnType = "mean", digits = 3){
+sdTrim <- function(data,
+                   minRT,
+                   sd,
+                   ppt.var = "participant",
+                   cond.var = "condition",
+                   rt.var = "rt",
+                   acc.var = "accuracy",
+                   perCondition = TRUE,
+                   perParticipant = TRUE,
+                   omitErrors = TRUE,
+                   returnType = "mean",
+                   digits = 3) {
 
   ###-------------
   if(perCondition == FALSE & perParticipant == FALSE){
