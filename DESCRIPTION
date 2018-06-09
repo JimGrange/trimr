@@ -1,5 +1,6 @@
 Package: trimr
 Version: 1.0.1.9000
+Date: 2015-08-28
 Authors@R: person("James A.", "Grange", ,"grange.jim@gmail.com",  c("aut", "cre"))
 Title: An Implementation of Common Response Time Trimming Methods
 Description: Provides various commonly-used response time trimming
