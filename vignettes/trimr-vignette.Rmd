@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-## Overview
+## Overview Test
 *trimr* is an R package that implements most commonly-used response time trimming methods, allowing the user to go from a raw data file to a finalised data file ready for inferential statistical analysis. 
 
 The trimming functions fall broadly into three families (together with the function names for each method implemented in *trimr*):
