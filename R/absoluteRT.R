@@ -18,6 +18,11 @@
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' @param maxRT The upper criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
+#' @param ppt.var The quoted name of the column in the data that identifies participants.
+#' @param cond.var The quoted name of the column in the data that includes the conditions.
+#' @param rt.var The quoted name of the column in the data containing reaction times.
+#' @param acc.var The quoted name of the column in the data containing accuracy,
+#' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
 #' by errors in this case.
@@ -39,26 +44,32 @@
 #'
 #'
 #' @export
-absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
-                       returnType = "mean", digits = 3){
+absoluteRT <- function(data,
+                       minRT,
+                       maxRT,
+                       ppt.var = "participant",
+                       cond.var = "condition",
+                       rt.var = "rt",
+                       acc.var = "accuracy",
+                       omitErrors = TRUE,
+                       returnType = "mean",
+                       digits = 3) {
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
-    trimmedData <- subset(data, data$accuracy == 1)
+    trimmedData <- data[data[[acc.var]] == 1, ]
   } else {
     trimmedData <- data
   }
 
-
   # get the list of participant numbers
-  participant <- sort(unique(trimmedData$participant))
+  participant <- unique(data[[ppt.var]])
 
   # get the list of experimental conditions
-  conditionList <- unique(trimmedData$condition)
+  conditionList <- unique(data[, cond.var])
 
   # trim the data
-  trimmedData <- subset(trimmedData, trimmedData$rt > minRT &
-                          trimmedData$rt < maxRT)
+  trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT & trimmedData[[rt.var]] < maxRT, ]
 
   # if the user asked for trial-level data, then just return what we have
   if(returnType == "raw"){
@@ -70,43 +81,39 @@ absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
   if(returnType == "mean"){
 
     # ready the final data set
-    finalData <- matrix(0, nrow = length(participant),
-                        ncol = length(conditionList))
+    # make a df here to preserve ppt column
+    finalData <- as.data.frame(matrix(0, nrow = length(participant),
+                                      ncol = length(conditionList)))
 
-      # give the columns the condition names
-      colnames(finalData) <- conditionList
+    # give the columns the condition names
+    colnames(finalData) <- conditionList
 
-      # add the participant column
-      finalData <- cbind(participant, finalData)
-
-      # convert to data frame
-      finalData <- data.frame(finalData)
+    # add the participant column
+    finalData <- cbind(participant, finalData)
 
     # loop over all conditions, and over all subjects, and find mean RT
 
     j <- 2 # to keep track of conditions looped over. Starts at 2 as this is
-           # where the first condition's column is.
+    # where the first condition's column is.
 
     for(currCondition in conditionList){
 
       # get the current condition's data
-      tempData <- subset(trimmedData, trimmedData$condition == currCondition)
+      tempData <- trimmedData[trimmedData[[cond.var]] == currCondition, ]
 
-        #now loop over all participants
-        i <- 1
+      #now loop over all participants
+      i <- 1
 
-        for(currParticipant in participant){
+      for(currParticipant in participant){
 
-          # get that participant's data
-          participantData <- subset(tempData,
-                                    tempData$participant == currParticipant)
+        participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
 
-          # calculate & store their mean response time
-          finalData[i, j] <- round(mean(participantData$rt), digits = digits)
+        # calculate & store their mean response time
+        finalData[i, j] <- round(mean(participantData[[rt.var]]), digits = digits)
 
-          # update participant counter
-          i <- i + 1
-        }
+        # update participant counter
+        i <- i + 1
+      }
 
       # update nCondition counter
       j <- j + 1
@@ -122,17 +129,15 @@ absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
   if(returnType == "median"){
 
     # ready the final data set
-    finalData <- matrix(0, nrow = length(participant),
-                        ncol = length(conditionList))
+    # make a df here to preserve ppt column
+    finalData <- as.data.frame(matrix(0, nrow = length(participant),
+                                      ncol = length(conditionList)))
 
     # give the columns the condition names
     colnames(finalData) <- conditionList
 
     # add the participant column
     finalData <- cbind(participant, finalData)
-
-    # convert to data frame
-    finalData <- data.frame(finalData)
 
     # loop over all conditions, and over all subjects, and find mean RT
 
@@ -142,20 +147,17 @@ absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
     for(currCondition in conditionList){
 
       # get the current condition's data
-      tempData <- subset(trimmedData, trimmedData$condition == currCondition)
-
+      tempData <- trimmedData[trimmedData[[cond.var]] == currCondition, ]
 
       #now loop over all participants
       i <- 1
 
       for(currParticipant in participant){
 
-        # get that participant's data
-        participantData <- subset(tempData,
-                                  tempData$participant == currParticipant)
+        participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
 
         # calculate & store their mean response time
-        finalData[i, j] <- round(median(participantData$rt), digits = digits)
+        finalData[i, j] <- round(median(participantData[[rt.var]]), digits = digits)
 
         # update participant counter
         i <- i + 1
@@ -172,4 +174,3 @@ absoluteRT <- function(data, minRT, maxRT, omitErrors = TRUE,
 
 } # end of function
 #------------------------------------------------------------------------------
-
