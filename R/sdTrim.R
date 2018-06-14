@@ -22,10 +22,10 @@
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' All RTs below this value are removed before proceeding with SD trimming.
 #' @param sd The upper criteria for standard deviation cut-off.
-#' @param ppt.var The quoted name of the column in the data that identifies participants.
-#' @param cond.var The quoted name of the column in the data that includes the conditions.
-#' @param rt.var The quoted name of the column in the data containing reaction times.
-#' @param acc.var The quoted name of the column in the data containing accuracy,
+#' @param pptVar The quoted name of the column in the data that identifies participants.
+#' @param condVar The quoted name of the column in the data that includes the conditions.
+#' @param rtVar The quoted name of the column in the data containing reaction times.
+#' @param accVar The quoted name of the column in the data containing accuracy,
 #' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param perCondition Set to TRUE if the user wishes the trimming to occur per
 #' condition of the experimental design.
@@ -54,10 +54,10 @@
 sdTrim <- function(data,
                    minRT,
                    sd,
-                   ppt.var = "participant",
-                   cond.var = "condition",
-                   rt.var = "rt",
-                   acc.var = "accuracy",
+                   pptVar = "participant",
+                   condVar = "condition",
+                   rtVar = "rt",
+                   accVar = "accuracy",
                    perCondition = TRUE,
                    perParticipant = TRUE,
                    omitErrors = TRUE,
@@ -71,29 +71,29 @@ sdTrim <- function(data,
 
     # remove errors if the user has asked for it
     if(omitErrors == TRUE){
-      trimmedData <- data[data[[acc.var]] == 1, ]
+      trimmedData <- data[data[[accVar]] == 1, ]
     } else {
       trimmedData <- data
     }
 
     # get the list of participant numbers
-    participant <- unique(data[[ppt.var]])
+    participant <- unique(data[[pptVar]])
 
     # get the list of experimental conditions
-    conditionList <- unique(data[, cond.var])
+    conditionList <- unique(data[, condVar])
 
     # trim the data
-    trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT, ]
+    trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT, ]
 
     # what is the mean & SD of the whole group's data?
-    meanRT <- mean(trimmedData[[rt.var]])
-    sdRT <- sd(trimmedData[[rt.var]])
+    meanRT <- mean(trimmedData[[rtVar]])
+    sdRT <- sd(trimmedData[[rtVar]])
 
     # what is the cut-off value?
     cutoff <- meanRT + (stDev * sdRT)
 
     # remove these rts
-    trimmedData <- trimmedData[trimmedData[[rt.var]] < cutoff, ]
+    trimmedData <- trimmedData[trimmedData[[rtVar]] < cutoff, ]
 
 
     # if the user asked for trial-level data, return immediately to user
@@ -124,7 +124,7 @@ sdTrim <- function(data,
       for(currCondition in conditionList){
 
         # get the current condition's data
-        tempData <- trimmedData[trimmedData[[cond.var]] == currCondition, ]
+        tempData <- trimmedData[trimmedData[[condVar]] == currCondition, ]
 
 
         #now loop over all participants
@@ -133,10 +133,11 @@ sdTrim <- function(data,
         for(currParticipant in participant){
 
           # get that participant's data
-          participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+          participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
           # calculate & store their mean response time
-          finalData[i, j] <- round(mean(participantData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(mean(participantData[[rtVar]]),
+                                   digits = digits)
 
           # update participant counter
           i <- i + 1
@@ -175,7 +176,7 @@ sdTrim <- function(data,
       for(currCondition in conditionList){
 
         # get the current condition's data
-        tempData <- trimmedData[trimmedData[[cond.var]] == currCondition, ]
+        tempData <- trimmedData[trimmedData[[condVar]] == currCondition, ]
 
 
         #now loop over all participants
@@ -184,10 +185,11 @@ sdTrim <- function(data,
         for(currParticipant in participant){
 
           # get that participant's data
-          participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+          participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
           # calculate & store their mean response time
-          finalData[i, j] <- round(median(participantData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(median(participantData[[rtVar]]),
+                                   digits = digits)
 
           # update participant counter
           i <- i + 1
@@ -213,19 +215,19 @@ sdTrim <- function(data,
 
     # remove errors if the user has asked for it
     if(omitErrors == TRUE){
-      trimmedData <- data[data[[acc.var]] == 1, ]
+      trimmedData <- data[data[[accVar]] == 1, ]
     } else {
       trimmedData <- data
     }
 
     # get the list of participant numbers
-    participant <- unique(data[[ppt.var]])
+    participant <- unique(data[[pptVar]])
 
     # get the list of experimental conditions
-    conditionList <- unique(data[, cond.var])
+    conditionList <- unique(data[, condVar])
 
     # trim the data
-    trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT, ]
+    trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT, ]
 
     ### do "raw"
     if(returnType == "raw"){
@@ -237,13 +239,13 @@ sdTrim <- function(data,
       for(cond in conditionList){
 
         # get the data, & find cutoff
-        curData <- trimmedData[trimmedData[[cond.var]] == cond, ]
-        curMean <- mean(curData[[rt.var]])
-        curSD <- sd(curData[[rt.var]])
+        curData <- trimmedData[trimmedData[[condVar]] == cond, ]
+        curMean <- mean(curData[[rtVar]])
+        curSD <- sd(curData[[rtVar]])
         curCutoff <- curMean + (stDev * curSD)
 
         # trim the data
-        curData <- curData[curData[[rt.var]] < curCutoff, ]
+        curData <- curData[curData[[rtVar]] < curCutoff, ]
 
         # bind the data
         finalData <- rbind(finalData, curData)
@@ -263,13 +265,13 @@ sdTrim <- function(data,
 
       for(cond in conditionList){
         # get the data, & find cutoff
-        curData <- trimmedData[trimmedData[[cond.var]] == cond, ]
-        curMean <- mean(curData[[rt.var]])
-        curSD <- sd(curData[[rt.var]])
+        curData <- trimmedData[trimmedData[[condVar]] == cond, ]
+        curMean <- mean(curData[[rtVar]])
+        curSD <- sd(curData[[rtVar]])
         curCutoff <- curMean + (stDev * curSD)
 
         # trim the data
-        curData <- curData[curData[[rt.var]] < curCutoff, ]
+        curData <- curData[curData[[rtVar]] < curCutoff, ]
 
         # bind the data
         tempData <- rbind(tempData, curData)
@@ -300,7 +302,7 @@ sdTrim <- function(data,
       for(curCondition in conditionList){
 
         # get the current condition's data
-        tempData <- trimmedData[trimmedData[[cond.var]] == curCondition, ]
+        tempData <- trimmedData[trimmedData[[condVar]] == curCondition, ]
 
         #now loop over all participants
         i <- 1
@@ -308,10 +310,11 @@ sdTrim <- function(data,
         for(currParticipant in participant){
 
           # get that participant's data
-          participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+          participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
           # calculate & store their mean response time
-          finalData[i, j] <- round(mean(participantData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(mean(participantData[[rtVar]]),
+                                   digits = digits)
 
           # update participant counter
           i <- i + 1
@@ -335,19 +338,19 @@ sdTrim <- function(data,
 
     # remove errors if the user has asked for it
     if(omitErrors == TRUE){
-      trimmedData <- data[data[[acc.var]] == 1, ]
+      trimmedData <- data[data[[accVar]] == 1, ]
     } else {
       trimmedData <- data
     }
 
     # get the list of participant numbers
-    participant <- unique(data[[ppt.var]])
+    participant <- unique(data[[pptVar]])
 
     # get the list of experimental conditions
-    conditionList <- unique(data[, cond.var])
+    conditionList <- unique(data[, condVar])
 
     # trim the data
-    trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT, ]
+    trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT, ]
 
 
     ### do "raw"
@@ -360,15 +363,15 @@ sdTrim <- function(data,
       for(currSub in participant){
 
         # get the current subject's data
-        curData <- trimmedData[trimmedData[[ppt.var]] == currSub, ]
+        curData <- trimmedData[trimmedData[[pptVar]] == currSub, ]
 
         # find their mean, sd, & cutoff
-        curMean <- mean(curData[[rt.var]])
-        curSD <- sd(curData[[rt.var]])
+        curMean <- mean(curData[[rtVar]])
+        curSD <- sd(curData[[rtVar]])
         curCutoff <- curMean + (stDev * curSD)
 
         # trim the data
-        curData <- curData[curData[[rt.var]] < curCutoff, ]
+        curData <- curData[curData[[rtVar]] < curCutoff, ]
 
         # bind the data
         finalData <- rbind(finalData, curData)
@@ -388,15 +391,15 @@ sdTrim <- function(data,
       for(currSub in participant){
 
         # get the current subject's data
-        curData <- trimmedData[trimmedData[[ppt.var]] == currSub, ]
+        curData <- trimmedData[trimmedData[[pptVar]] == currSub, ]
 
         # find their mean, sd, & cutoff
-        curMean <- mean(curData[[rt.var]])
-        curSD <- sd(curData[[rt.var]])
+        curMean <- mean(curData[[rtVar]])
+        curSD <- sd(curData[[rtVar]])
         curCutoff <- curMean + (stDev * curSD)
 
         # trim the data
-        curData <- curData[curData[[rt.var]] < curCutoff, ]
+        curData <- curData[curData[[rtVar]] < curCutoff, ]
 
         # bind the data
         tempData <- rbind(tempData, curData)
@@ -428,7 +431,7 @@ sdTrim <- function(data,
       for(curCondition in conditionList){
 
         # get the current condition's data
-        tempData <- trimmedData[trimmedData[[cond.var]] == curCondition, ]
+        tempData <- trimmedData[trimmedData[[condVar]] == curCondition, ]
 
         #now loop over all participants
         i <- 1
@@ -436,10 +439,11 @@ sdTrim <- function(data,
         for(currParticipant in participant){
 
           # get that participant's data
-          participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+          participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
           # calculate & store their mean response time
-          finalData[i, j] <- round(mean(participantData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(mean(participantData[[rtVar]]),
+                                   Vdigits = digits)
 
           # update participant counter
           i <- i + 1
@@ -464,15 +468,15 @@ sdTrim <- function(data,
       for(currSub in participant){
 
         # get the current subject's data
-        curData <- trimmedData[trimmedData[[ppt.var]] == currSub, ]
+        curData <- trimmedData[trimmedData[[pptVar]] == currSub, ]
 
         # find their mean, sd, & cutoff
-        curMean <- mean(curData[[rt.var]])
-        curSD <- sd(curData[[rt.var]])
+        curMean <- mean(curData[[rtVar]])
+        curSD <- sd(curData[[rtVar]])
         curCutoff <- curMean + (stDev * curSD)
 
         # trim the data
-        curData <- curData[curData[[rt.var]] < curCutoff, ]
+        curData <- curData[curData[[rtVar]] < curCutoff, ]
 
         # bind the data
         tempData <- rbind(tempData, curData)
@@ -502,7 +506,7 @@ sdTrim <- function(data,
       for(curCondition in conditionList){
 
         # get the current condition's data
-        tempData <- trimmedData[trimmedData[[cond.var]] == curCondition, ]
+        tempData <- trimmedData[trimmedData[[condVar]] == curCondition, ]
 
         #now loop over all participants
         i <- 1
@@ -510,10 +514,11 @@ sdTrim <- function(data,
         for(currParticipant in participant){
 
           # get that participant's data
-          participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+          participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
           # calculate & store their mean response time
-          finalData[i, j] <- round(median(participantData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(median(participantData[[rtVar]]),
+                                   digits = digits)
 
           # update participant counter
           i <- i + 1
@@ -539,19 +544,19 @@ sdTrim <- function(data,
 
     # remove errors if the user has asked for it
     if(omitErrors == TRUE){
-      trimmedData <- data[data[[acc.var]] == 1, ]
+      trimmedData <- data[data[[accVar]] == 1, ]
     } else {
       trimmedData <- data
     }
 
     # get the list of participant numbers
-    participant <- unique(data[[ppt.var]])
+    participant <- unique(data[[pptVar]])
 
     # get the list of experimental conditions
-    conditionList <- unique(data[, cond.var])
+    conditionList <- unique(data[, condVar])
 
     # trim the data
-    trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT, ]
+    trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT, ]
 
     ### do "raw"
     if(returnType == "raw"){
@@ -566,16 +571,16 @@ sdTrim <- function(data,
         for(currCond in conditionList){
 
           # get the relevant data
-          tempData <- trimmedData[trimmedData[[cond.var]] == currCond &
-                                    trimmedData[[ppt.var]] == currSub, ]
+          tempData <- trimmedData[trimmedData[[condVar]] == currCond &
+                                    trimmedData[[pptVar]] == currSub, ]
 
           # find the cutoff
-          curMean <- mean(tempData[[rt.var]])
-          curSD <- sd(tempData[[rt.var]])
+          curMean <- mean(tempData[[rtVar]])
+          curSD <- sd(tempData[[rtVar]])
           curCutoff <- curMean + (stDev * curSD)
 
           # perform the trim
-          curData <- tempData[tempData[[rt.var]] < curCutoff, ]
+          curData <- tempData[tempData[[rtVar]] < curCutoff, ]
 
           # store the data
           finalData <- rbind(finalData, curData)
@@ -618,19 +623,20 @@ sdTrim <- function(data,
         for(currCond in conditionList){
 
           # get the relevant data
-          tempData <- trimmedData[trimmedData[[ppt.var]] == currSub &
-                                    trimmedData[[cond.var]] == currCond, ]
+          tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
+                                    trimmedData[[condVar]] == currCond, ]
 
           # find the cutoff
-          curMean <- mean(tempData[[rt.var]])
-          curSD <- sd(tempData[[rt.var]])
+          curMean <- mean(tempData[[rtVar]])
+          curSD <- sd(tempData[[rtVar]])
           curCutoff <- curMean + (stDev * curSD)
 
           # trim the data
-          curData <- tempData[tempData[[rt.var]] < curCutoff, ]
+          curData <- tempData[tempData[[rtVar]] < curCutoff, ]
 
           # find the average, and add to the data frame
-          finalData[i, j] <- round(mean(curData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(mean(curData[[rtVar]]),
+                                   digits = digits)
 
           # update condition loop counter
           j <- j + 1
@@ -674,19 +680,19 @@ sdTrim <- function(data,
         for(currCond in conditionList){
 
           # get the relevant data
-          tempData <- trimmedData[trimmedData[[ppt.var]] == currSub &
-                                    trimmedData[[cond.var]] == currCond, ]
+          tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
+                                    trimmedData[[condVar]] == currCond, ]
 
           # find the cutoff
-          curMean <- mean(tempData[[rt.var]])
-          curSD <- sd(tempData[[rt.var]])
+          curMean <- mean(tempData[[rtVar]])
+          curSD <- sd(tempData[[rtVar]])
           curCutoff <- curMean + (stDev * curSD)
 
           # trim the data
-          curData <- tempData[tempData[[rt.var]] < curCutoff, ]
+          curData <- tempData[tempData[[rtVar]] < curCutoff, ]
 
           # find the average, and add to the data frame
-          finalData[i, j] <- round(median(curData[[rt.var]]), digits = digits)
+          finalData[i, j] <- round(median(curData[[rtVar]]), digits = digits)
 
           # update condition loop counter
           j <- j + 1

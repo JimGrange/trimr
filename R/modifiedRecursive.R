@@ -13,10 +13,10 @@
 #' @param minRT The lower criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' All RTs below this value are removed before proceeding with SD trimming.
-#' @param ppt.var The quoted name of the column in the data that identifies participants.
-#' @param cond.var The quoted name of the column in the data that includes the conditions.
-#' @param rt.var The quoted name of the column in the data containing reaction times.
-#' @param acc.var The quoted name of the column in the data containing accuracy,
+#' @param pptVar The quoted name of the column in the data that identifies participants.
+#' @param condVar The quoted name of the column in the data that includes the conditions.
+#' @param rtVar The quoted name of the column in the data containing reaction times.
+#' @param accVar The quoted name of the column in the data containing accuracy,
 #' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
@@ -41,9 +41,9 @@
 
 modifiedRecursive <- function(data,
                               minRT,
-                              ppt.var = "participant",
-                              cond.var = "condition",
-                              rt.var = "rt",
+                              pptVar = "participant",
+                              condVar = "condition",
+                              rtVar = "rt",
                               acc.var = "accuracy",
                               omitErrors = TRUE,
                               digits = 3) {
@@ -51,19 +51,19 @@ modifiedRecursive <- function(data,
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
-    trimmedData <- data[data[[acc.var]] == 1, ]
+    trimmedData <- data[data[[accVar]] == 1, ]
   } else {
     trimmedData <- data
   }
 
   # get the list of participant numbers
-  participant <- unique(data[[ppt.var]])
+  participant <- unique(data[[pptVar]])
 
   # get the list of experimental conditions
-  conditionList <- unique(data[, cond.var])
+  conditionList <- unique(data[, condVar])
 
   # trim the data
-  trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT, ]
+  trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT, ]
 
   # ready the final data set
   # make a df here to preserve ppt column
@@ -91,12 +91,12 @@ modifiedRecursive <- function(data,
     for(currCond in conditionList){
 
       # get the relevant data
-      tempData <- trimmedData[trimmedData[[ppt.var]] == currSub &
-                                trimmedData[[cond.var]] == currCond, ]
+      tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
+                                trimmedData[[condVar]] == currCond, ]
 
 
       # find the average, and add to the data frame
-      finalData[i, j] <- round(modifiedRecursiveTrim(tempData[[rt.var]]),
+      finalData[i, j] <- round(modifiedRecursiveTrim(tempData[[rtVar]]),
                                digits = digits)
 
       # update condition loop counter
@@ -121,7 +121,6 @@ modifiedRecursiveTrim <- function(data){
 
   # repeat the following
   repeat{
-
 
     # the data needs to have more than 2 RTs in order to function.
     # (thanks to Ayala Allon for noticing this.)

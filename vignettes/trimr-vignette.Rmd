@@ -51,7 +51,7 @@ If these columns had different names from the defaults these can be specified, f
 ```{r, eval = F}
 # perform the trimming
 trimmedData <- absoluteRT(data = exampleData, 
-                          ppt.var = "id", cond.var = "cond", rt.var = "RT", acc.var = "correct", 
+                          pptVar = "id", condVar = "cond", rtVar = "RT", accVar = "correct", 
                           minRT = 150, maxRT = 2000, digits = 0)
 ```
 

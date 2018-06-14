@@ -18,10 +18,10 @@
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' @param maxRT The upper criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
-#' @param ppt.var The quoted name of the column in the data that identifies participants.
-#' @param cond.var The quoted name of the column in the data that includes the conditions.
-#' @param rt.var The quoted name of the column in the data containing reaction times.
-#' @param acc.var The quoted name of the column in the data containing accuracy,
+#' @param pptVar The quoted name of the column in the data that identifies participants.
+#' @param condVar The quoted name of the column in the data that includes the conditions.
+#' @param rtVar The quoted name of the column in the data containing reaction times.
+#' @param accVar The quoted name of the column in the data containing accuracy,
 #' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
@@ -47,10 +47,10 @@
 absoluteRT <- function(data,
                        minRT,
                        maxRT,
-                       ppt.var = "participant",
-                       cond.var = "condition",
-                       rt.var = "rt",
-                       acc.var = "accuracy",
+                       pptVar = "participant",
+                       condVar = "condition",
+                       rtVar = "rt",
+                       accVar = "accuracy",
                        omitErrors = TRUE,
                        returnType = "mean",
                        digits = 3) {
@@ -63,13 +63,14 @@ absoluteRT <- function(data,
   }
 
   # get the list of participant numbers
-  participant <- unique(data[[ppt.var]])
+  participant <- unique(data[[pptVar]])
 
   # get the list of experimental conditions
-  conditionList <- unique(data[, cond.var])
+  conditionList <- unique(data[, condVar])
 
   # trim the data
-  trimmedData <- trimmedData[trimmedData[[rt.var]] > minRT & trimmedData[[rt.var]] < maxRT, ]
+  trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT &
+                               trimmedData[[rtVar]] < maxRT, ]
 
   # if the user asked for trial-level data, then just return what we have
   if(returnType == "raw"){
@@ -99,17 +100,17 @@ absoluteRT <- function(data,
     for(currCondition in conditionList){
 
       # get the current condition's data
-      tempData <- trimmedData[trimmedData[[cond.var]] == currCondition, ]
+      tempData <- trimmedData[trimmedData[[condVar]] == currCondition, ]
 
       #now loop over all participants
       i <- 1
 
       for(currParticipant in participant){
 
-        participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+        participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
         # calculate & store their mean response time
-        finalData[i, j] <- round(mean(participantData[[rt.var]]), digits = digits)
+        finalData[i, j] <- round(mean(participantData[[rtVar]]), digits = digits)
 
         # update participant counter
         i <- i + 1
@@ -147,17 +148,17 @@ absoluteRT <- function(data,
     for(currCondition in conditionList){
 
       # get the current condition's data
-      tempData <- trimmedData[trimmedData[[cond.var]] == currCondition, ]
+      tempData <- trimmedData[trimmedData[[condVar]] == currCondition, ]
 
       #now loop over all participants
       i <- 1
 
       for(currParticipant in participant){
 
-        participantData <- tempData[tempData[[ppt.var]] == currParticipant, ]
+        participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
         # calculate & store their mean response time
-        finalData[i, j] <- round(median(participantData[[rt.var]]), digits = digits)
+        finalData[i, j] <- round(median(participantData[[rtVar]]), digits = digits)
 
         # update participant counter
         i <- i + 1
