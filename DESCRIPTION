@@ -1,7 +1,9 @@
 Package: trimr
 Version: 1.0.1.9000
 Date: 2015-08-28
-Authors@R: person("James A.", "Grange", ,"grange.jim@gmail.com",  c("aut", "cre"))
+Authors@R: c(
+    person("James A.", "Grange", email = "grange.jim@gmail.com", role = c("cre", "aut")),
+    person("Ed", "Berry", role = "ctb"))
 Title: An Implementation of Common Response Time Trimming Methods
 Description: Provides various commonly-used response time trimming
     methods, including the recursive / moving-criterion methods reported by
