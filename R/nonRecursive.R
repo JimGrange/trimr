@@ -221,7 +221,7 @@ nonRecursive <- function(data,
 
 #------------------------------------------------------------------------------
 ### The function that acually does the trimming
-nonRecursiveTrim <- function(data, rtVar = rtVar, returnType = "mean"){
+nonRecursiveTrim <- function(data, rtVar = "rt", returnType = "mean"){
 
   # load the linear interpolation data file (hidden from user)
   criterion <- linearInterpolation
