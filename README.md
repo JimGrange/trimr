@@ -22,7 +22,7 @@ To install the latest version of *trimr* (i.e., the development version of next 
 install.packages("devtools")
 
 # install trimr from GitHub
-devtools::install_github("JimGrange/trimr")
+devools::install_github("JimGrange/trimr")
 ```
 
 Overview
@@ -119,4 +119,4 @@ devtools::install_github("JimGrange/trimr")
 References
 ----------
 
-Van Selst, M., & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. Quarterly Journal of Experimental Psychology, 47 (A), 631–650.
+Van Selst, M., & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. *Quarterly Journal of Experimental Psychology, 47 (A)*, 631–650.

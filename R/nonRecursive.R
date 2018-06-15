@@ -239,7 +239,6 @@ nonRecursiveTrim <- function(data, rtVar = rtVar, returnType = "mean"){
   }
 
   # look up the SD to use for the current sampleSize
-  ### THIS NEEDS UPDATING IN OTHER RECURSIVE FUNCTIONS
   rowNumber <- which(criterion$sampleSize == sampleSize)
   stDev <- criterion$nonRecursive[rowNumber]
 

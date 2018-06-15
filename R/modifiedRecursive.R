@@ -143,7 +143,8 @@ modifiedRecursiveTrim <- function(data){
     }
 
     # look up the SD to use for the current sampleSize
-    stDev <- criterion$nonRecursive[sampleSize]
+    rowNumber <- which(criterion$sampleSize == sampleSize)
+    stDev <- criterion$modifiedRecursive[rowNumber]
 
     ### now do the removal of trials
 
