@@ -443,7 +443,7 @@ sdTrim <- function(data,
 
           # calculate & store their mean response time
           finalData[i, j] <- round(mean(participantData[[rtVar]]),
-                                   Vdigits = digits)
+                                   digits = digits)
 
           # update participant counter
           i <- i + 1
