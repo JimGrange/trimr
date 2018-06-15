@@ -57,7 +57,7 @@ absoluteRT <- function(data,
 
   # remove errors if the user has asked for it
   if(omitErrors == TRUE){
-    trimmedData <- data[data[[acc.var]] == 1, ]
+    trimmedData <- data[data[[accVar]] == 1, ]
   } else {
     trimmedData <- data
   }

@@ -44,7 +44,7 @@ modifiedRecursive <- function(data,
                               pptVar = "participant",
                               condVar = "condition",
                               rtVar = "rt",
-                              acc.var = "accuracy",
+                              accVar = "accuracy",
                               omitErrors = TRUE,
                               digits = 3) {
 
