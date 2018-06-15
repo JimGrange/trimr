@@ -9,21 +9,25 @@ modifiedRecursive(data, minRT, pptVar = "participant",
   omitErrors = TRUE, digits = 3)
 }
 \arguments{
-\item{data}{A data frame. It must contain columns named "participant",
-"condition", "rt", and "accuracy". The RT can be in seconds
-(e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition" will
-consist of strings. "accuracy" must be 1 for correct and 0 for error
-responses.}
+\item{data}{A data frame with columns containing: participant identification
+number ('pptVar'); condition identification, if applicable ('condVar');
+response time data ('rtVar'); and accuracy ('accVar'). The RT can be in
+seconds (e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition"
+will consist of strings. Accuracy must be coded as 1 for correct and 0 for
+error responses.}
 
 \item{minRT}{The lower criteria for acceptable response time. Must be in
 the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 All RTs below this value are removed before proceeding with SD trimming.}
 
-\item{pptVar}{The quoted name of the column in the data that identifies participants.}
+\item{pptVar}{The quoted name of the column in the data that identifies
+participants.}
 
-\item{condVar}{The quoted name of the column in the data that includes the conditions.}
+\item{condVar}{The quoted name of the column in the data that includes the
+conditions.}
 
-\item{rtVar}{The quoted name of the column in the data containing reaction times.}
+\item{rtVar}{The quoted name of the column in the data containing reaction
+times.}
 
 \item{accVar}{The quoted name of the column in the data containing accuracy,
 coded as 0 or 1 for incorrect and correct trial, respectively.}

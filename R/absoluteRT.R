@@ -9,18 +9,22 @@
 #' of trial-level data or in the form of means/medians for each subject &
 #' condition.
 #'
-#' @param data A data frame. It must contain columns named "participant",
-#' "condition", "rt", and "accuracy". The RT can be in seconds
-#' (e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition" will
-#' consist of strings. "accuracy" must be 1 for correct and 0 for error
-#' responses.
+#' @param data A data frame with columns containing: participant identification
+#' number ('pptVar'); condition identification, if applicable ('condVar');
+#' response time data ('rtVar'); and accuracy ('accVar'). The RT can be in
+#' seconds (e.g., 0.654) or milliseconds (e.g., 654). Typically, "condition"
+#' will consist of strings. Accuracy must be coded as 1 for correct and 0 for
+#' error responses.
 #' @param minRT The lower criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 #' @param maxRT The upper criteria for acceptable response time. Must be in
 #' the same form as rt column in data frame (e.g., in seconds OR milliseconds).
-#' @param pptVar The quoted name of the column in the data that identifies participants.
-#' @param condVar The quoted name of the column in the data that includes the conditions.
-#' @param rtVar The quoted name of the column in the data containing reaction times.
+#' @param pptVar The quoted name of the column in the data that identifies
+#' participants.
+#' @param condVar The quoted name of the column in the data that includes the
+#' conditions.
+#' @param rtVar The quoted name of the column in the data containing reaction
+#' times.
 #' @param accVar The quoted name of the column in the data containing accuracy,
 #' coded as 0 or 1 for incorrect and correct trial, respectively.
 #' @param omitErrors If set to TRUE, error trials will be removed before
