@@ -10,7 +10,7 @@ Description: Provides various commonly-used response time trimming
     Van Selst and Jolicoeur (1994). By passing trimming functions raw data files,
     the package will return trimmed data ready for inferential testing.
 Depends: R (>= 3.1.1)
-Imports: stats
+Imports: stats, dplyr
 License: GPL-3
 LazyData: true
 URL: https://github.com/JimGrange/trimr

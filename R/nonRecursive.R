@@ -27,13 +27,19 @@
 #' @param omitErrors If set to TRUE, error trials will be removed before
 #' conducting trimming procedure. Final data returned will not be influenced
 #' by errors in this case.
+#' @param returnType Request nature of returned data. "raw" returns trial-
+#' level data excluding trimmed data; "mean" returns mean response times per
+#' participant for each experimental condition identified; "median" returns
+#' median response times per participant for each experimental condition
+#' identified.
 #' @param digits How many decimal places to round to after trimming?
 #' @examples
 #' # load the example data that ships with trimr
 #' data(exampleData)
 #'
 #' # perform the trimming, returning mean RT
-#' trimmedData <- nonRecursive(data = exampleData, minRT = 150)
+#' trimmedData <- nonRecursive(data = exampleData, minRT = 150,
+#' returnType = "mean")
 #'
 #' @references Van Selst, M. & Jolicoeur, P. (1994). A solution to the effect
 #' of sample size on outlier elimination. \emph{Quarterly Journal of Experimental
@@ -50,6 +56,7 @@ nonRecursive <- function(data,
                          rtVar = "rt",
                          accVar = "accuracy",
                          omitErrors = TRUE,
+                         returnType = "mean",
                          digits = 3) {
 
   # remove errors if the user has asked for it
@@ -68,64 +75,163 @@ nonRecursive <- function(data,
   # trim the data
   trimmedData <- trimmedData[trimmedData[[rtVar]] > minRT, ]
 
-  # ready the final data set
-  # make a df here to preserve ppt column
-  finalData <- as.data.frame(matrix(0, nrow = length(participant),
-                                    ncol = length(conditionList)))
 
-  # give the columns the condition names
-  colnames(finalData) <- conditionList
+  #-------
+  ### returnType == mean
 
-  # add the participant column
-  finalData <- cbind(participant, finalData)
+  if(returnType == "mean"){
 
-  # convert to data frame
-  finalData <- data.frame(finalData)
+    # ready the final data set
+    # make a df here to preserve ppt column
+    finalData <- as.data.frame(matrix(0, nrow = length(participant),
+                                      ncol = length(conditionList)))
 
-  # intialise looping variable for subjects
-  i <- 1
+    # give the columns the condition names
+    colnames(finalData) <- conditionList
 
-  # loop over all subjects
-  for(currSub in participant){
+    # add the participant column
+    finalData <- cbind(participant, finalData)
 
-    # intialise looping variable for conditions. It starts at 2 because the
-    # first column in the data file containing condition information is the
-    # second one.
-    j <- 2
+    # convert to data frame
+    finalData <- data.frame(finalData)
 
-    # loop over all conditions
-    for(currCond in conditionList){
+    # intialise looping variable for subjects
+    i <- 1
 
-      # get the relevant data
-      tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
-                                trimmedData[[condVar]] == currCond, ]
+    # loop over all subjects
+    for(currSub in participant){
+
+      # intialise looping variable for conditions. It starts at 2 because the
+      # first column in the data file containing condition information is the
+      # second one.
+      j <- 2
+
+      # loop over all conditions
+      for(currCond in conditionList){
+
+        # get the relevant data
+        tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
+                                  trimmedData[[condVar]] == currCond, ]
 
 
-      # find the average, and add to the data frame
-      finalData[i, j] <- round(nonRecursiveTrim(tempData[[rtVar]]),
-                               digits = digits)
+        # find the average, and add to the data frame
+        finalData[i, j] <- round(nonRecursiveTrim(tempData[[rtVar]],
+                                                  returnType = returnType),
+                                 digits = digits)
 
-      # update condition loop counter
-      j <- j + 1
+        # update condition loop counter
+        j <- j + 1
+      }
+
+      # update participant loop counter
+      i <- i + 1
+    }
+    return(finalData)
+  } # end of returnType == "mean" section
+
+
+  #-------
+  ### returnType == median
+
+  if(returnType == "median"){
+
+    # ready the final data set
+    # make a df here to preserve ppt column
+    finalData <- as.data.frame(matrix(0, nrow = length(participant),
+                                      ncol = length(conditionList)))
+
+    # give the columns the condition names
+    colnames(finalData) <- conditionList
+
+    # add the participant column
+    finalData <- cbind(participant, finalData)
+
+    # convert to data frame
+    finalData <- data.frame(finalData)
+
+    # intialise looping variable for subjects
+    i <- 1
+
+    # loop over all subjects
+    for(currSub in participant){
+
+      # intialise looping variable for conditions. It starts at 2 because the
+      # first column in the data file containing condition information is the
+      # second one.
+      j <- 2
+
+      # loop over all conditions
+      for(currCond in conditionList){
+
+        # get the relevant data
+        tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
+                                  trimmedData[[condVar]] == currCond, ]
+
+        # find the average, and add to the data frame
+        finalData[i, j] <- round(nonRecursiveTrim(tempData[[rtVar]],
+                                                  returnType = returnType),
+                                 digits = digits)
+
+        # update condition loop counter
+        j <- j + 1
+      }
+
+      # update participant loop counter
+      i <- i + 1
+    }
+    return(finalData)
+  } # end of returnType == "median" section
+
+
+  #-------
+  ### returnType == raw
+  if(returnType == "raw"){
+
+    # ready the final data set
+    finalData <- matrix(0, nrow = 0, ncol = length(colnames(trimmedData)))
+    colnames(finalData) <- colnames(trimmedData)
+
+    # loop over all subjects
+    for(currSub in participant){
+
+      # loop over each condition
+      for(currCond in conditionList){
+
+        # get the relevant data
+        tempData <- trimmedData[trimmedData[[pptVar]] == currSub &
+                                  trimmedData[[condVar]] == currCond, ]
+
+        # do the trimming
+        tempData <- nonRecursiveTrim(tempData[[rtVar]], rtVar = rtVar,
+                                     returnType = returnType)
+
+        # update the final data frame
+        finalData <- rbind(finalData, tempData)
+
+      }
     }
 
-    # update participant loop counter
-    i <- i + 1
-  }
-  return(finalData)
+    return(finalData)
+
+  } # end of returnType == "raw" section
+
 }
 #------------------------------------------------------------------------------
 
 
 #------------------------------------------------------------------------------
 ### The function that acually does the trimming
-nonRecursiveTrim <- function(data){
+nonRecursiveTrim <- function(data, rtVar = rtVar, returnType = "mean"){
 
   # load the linear interpolation data file (hidden from user)
   criterion <- linearInterpolation
 
   # get the sample size of the current data
-  sampleSize <- length(data)
+  if(returnType == "mean" | returnType == "median"){
+    sampleSize <- length(data)
+  } else {
+    sampleSize <- nrow(data)
+  }
 
   # if the sample size is greater than 100, use SDs for N = 100
   if(sampleSize > 100){
@@ -133,19 +239,49 @@ nonRecursiveTrim <- function(data){
   }
 
   # look up the SD to use for the current sampleSize
-  stDev <- criterion$nonRecursive[sampleSize]
+  ### THIS NEEDS UPDATING IN OTHER RECURSIVE FUNCTIONS
+  rowNumber <- which(criterion$sampleSize == sampleSize)
+  stDev <- criterion$nonRecursive[rowNumber]
 
-  # now use this value to do the trimming
-  curMean <- mean(data)
-  curSD <- sd(data)
-  maxCutoff <- curMean + (stDev * curSD)
-  minCutoff <- curMean - (stDev * curSD)
+  if(returnType == "mean" | returnType == "median"){
+    # now use this value to do the trimming
+    curMean <- mean(data)
+    curSD <- sd(data)
+    maxCutoff <- curMean + (stDev * curSD)
+    minCutoff <- curMean - (stDev * curSD)
 
-  # which trials should be included?
-  includedTrials <- data < maxCutoff & data > minCutoff
+    # which trials should be included?
+    includedTrials <- data < maxCutoff & data > minCutoff
+  }
 
-  # calculate the final mean RT
-  finalData <- mean(data[includedTrials])
+  if(returnType == "raw"){
+    # now use this value to do the trimming
+    curMean <- mean(data[[rtVar]])
+    curSD <- sd(data[[rtVar]])
+    maxCutoff <- curMean + (stDev * curSD)
+    minCutoff <- curMean - (stDev * curSD)
+
+    # which trials should be included?
+    includedTrials <- data[[rtVar]] < maxCutoff & data[[rtVar]] > minCutoff
+  }
+
+
+  # organise the return data based on returnType argument
+  if(returnType == "mean"){
+    finalData <- mean(data[includedTrials])
+  }
+
+  if(returnType == "median"){
+    finalData <- median(data[includedTrials])
+  }
+
+  if(returnType == "raw"){
+    finalData <- data %>% mutate(included = includedTrials)
+    finalData <- finalData %>%
+      filter(included == TRUE) %>%
+      select(-included)
+  }
+
 
   # return it
   return(finalData)
