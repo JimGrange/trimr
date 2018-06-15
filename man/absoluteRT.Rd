@@ -4,8 +4,8 @@
 \alias{absoluteRT}
 \title{Absolute RT trimming}
 \usage{
-absoluteRT(data, minRT, maxRT, ppt.var = "participant",
-  cond.var = "condition", rt.var = "rt", acc.var = "accuracy",
+absoluteRT(data, minRT, maxRT, pptVar = "participant",
+  condVar = "condition", rtVar = "rt", accVar = "accuracy",
   omitErrors = TRUE, returnType = "mean", digits = 3)
 }
 \arguments{
@@ -21,13 +21,13 @@ the same form as rt column in data frame (e.g., in seconds OR milliseconds).}
 \item{maxRT}{The upper criteria for acceptable response time. Must be in
 the same form as rt column in data frame (e.g., in seconds OR milliseconds).}
 
-\item{ppt.var}{The quoted name of the column in the data that identifies participants.}
+\item{pptVar}{The quoted name of the column in the data that identifies participants.}
 
-\item{cond.var}{The quoted name of the column in the data that includes the conditions.}
+\item{condVar}{The quoted name of the column in the data that includes the conditions.}
 
-\item{rt.var}{The quoted name of the column in the data containing reaction times.}
+\item{rtVar}{The quoted name of the column in the data containing reaction times.}
 
-\item{acc.var}{The quoted name of the column in the data containing accuracy,
+\item{accVar}{The quoted name of the column in the data containing accuracy,
 coded as 0 or 1 for incorrect and correct trial, respectively.}
 
 \item{omitErrors}{If set to TRUE, error trials will be removed before

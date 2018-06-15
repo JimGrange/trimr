@@ -1,5 +1,5 @@
 Package: trimr
-Version: 1.0.1.9000
+Version: 1.1.0.9000
 Date: 2015-08-28
 Authors@R: c(
     person("James A.", "Grange", email = "grange.jim@gmail.com", role = c("cre", "aut")),

@@ -4,9 +4,8 @@
 \alias{hybridRecursive}
 \title{hybridRecursive trimming procedure.}
 \usage{
-hybridRecursive(data, minRT, ppt.var = "participant",
-  cond.var = "condition", rt.var = "rt", acc.var = "accuracy",
-  omitErrors = TRUE, digits = 3)
+hybridRecursive(data, minRT, pptVar = "participant", condVar = "condition",
+  rtVar = "rt", accVar = "accuracy", omitErrors = TRUE, digits = 3)
 }
 \arguments{
 \item{data}{A data frame. It must contain columns named "participant",
@@ -19,13 +18,13 @@ responses.}
 the same form as rt column in data frame (e.g., in seconds OR milliseconds).
 All RTs below this value are removed before proceeding with SD trimming.}
 
-\item{ppt.var}{The quoted name of the column in the data that identifies participants.}
+\item{pptVar}{The quoted name of the column in the data that identifies participants.}
 
-\item{cond.var}{The quoted name of the column in the data that includes the conditions.}
+\item{condVar}{The quoted name of the column in the data that includes the conditions.}
 
-\item{rt.var}{The quoted name of the column in the data containing reaction times.}
+\item{rtVar}{The quoted name of the column in the data containing reaction times.}
 
-\item{acc.var}{The quoted name of the column in the data containing accuracy,
+\item{accVar}{The quoted name of the column in the data containing accuracy,
 coded as 0 or 1 for incorrect and correct trial, respectively.}
 
 \item{omitErrors}{If set to TRUE, error trials will be removed before

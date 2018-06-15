@@ -4,8 +4,8 @@
 \alias{sdTrim}
 \title{RT trimming with standard deviation criterion}
 \usage{
-sdTrim(data, minRT, sd, ppt.var = "participant", cond.var = "condition",
-  rt.var = "rt", acc.var = "accuracy", perCondition = TRUE,
+sdTrim(data, minRT, sd, pptVar = "participant", condVar = "condition",
+  rtVar = "rt", accVar = "accuracy", perCondition = TRUE,
   perParticipant = TRUE, omitErrors = TRUE, returnType = "mean",
   digits = 3)
 }
@@ -22,13 +22,13 @@ All RTs below this value are removed before proceeding with SD trimming.}
 
 \item{sd}{The upper criteria for standard deviation cut-off.}
 
-\item{ppt.var}{The quoted name of the column in the data that identifies participants.}
+\item{pptVar}{The quoted name of the column in the data that identifies participants.}
 
-\item{cond.var}{The quoted name of the column in the data that includes the conditions.}
+\item{condVar}{The quoted name of the column in the data that includes the conditions.}
 
-\item{rt.var}{The quoted name of the column in the data containing reaction times.}
+\item{rtVar}{The quoted name of the column in the data containing reaction times.}
 
-\item{acc.var}{The quoted name of the column in the data containing accuracy,
+\item{accVar}{The quoted name of the column in the data containing accuracy,
 coded as 0 or 1 for incorrect and correct trial, respectively.}
 
 \item{perCondition}{Set to TRUE if the user wishes the trimming to occur per
