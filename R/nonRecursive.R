@@ -46,6 +46,11 @@
 #' Psychology, 47} (A), 631-650.
 #'
 #' @importFrom stats sd
+#' @importFrom dplyr %>%
+#' @importFrom dplyr row_number
+#' @importFrom dplyr filter
+#' @importFrom dplyr select
+#' @importFrom dplyr mutate
 #'
 #' @export
 
@@ -276,12 +281,11 @@ nonRecursiveTrim <- function(data, rtVar = "rt", returnType = "mean"){
   }
 
   if(returnType == "raw"){
+    columnNames <- colnames(data)
     finalData <- data %>% mutate(included = includedTrials)
-    finalData <- finalData %>%
-      filter(included == TRUE) %>%
-      select(-included)
+    finalData <- subset(finalData, finalData$included == TRUE)
+    finalData <- subset(finalData, select = columnNames)
   }
-
 
   # return it
   return(finalData)

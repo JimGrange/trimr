@@ -47,7 +47,8 @@
 #' returnType = "mean")
 #'
 #' @importFrom stats sd
-#'
+#' @importFrom dplyr %>%
+#' @importFrom dplyr row_number
 #' @export
 
 modifiedRecursive <- function(data,
@@ -501,7 +502,6 @@ modifiedRecursiveTrim <- function(data, rtVar = "rt", returnType = "mean"){
     # return the data
     return(finalData)
   }
-
 
 } # end of function
 #------------------------------------------------------------------------------
