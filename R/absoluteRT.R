@@ -114,7 +114,8 @@ absoluteRT <- function(data,
         participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
         # calculate & store their mean response time
-        finalData[i, j] <- round(mean(participantData[[rtVar]]), digits = digits)
+        finalData[i, j] <- round(mean(participantData[[rtVar]]),
+                                 digits = digits)
 
         # update participant counter
         i <- i + 1
@@ -162,7 +163,8 @@ absoluteRT <- function(data,
         participantData <- tempData[tempData[[pptVar]] == currParticipant, ]
 
         # calculate & store their mean response time
-        finalData[i, j] <- round(median(participantData[[rtVar]]), digits = digits)
+        finalData[i, j] <- round(median(participantData[[rtVar]]),
+                                 digits = digits)
 
         # update participant counter
         i <- i + 1

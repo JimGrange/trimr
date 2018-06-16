@@ -99,10 +99,10 @@ hybridRecursive <- function(data,
 
 
       # get the nonRecursive mean
-      nonR <- nonRecursiveTrim(tempData[[rtVar]])
+      nonR <- nonRecursiveTrim(tempData[[rtVar]], returnType = "mean")
 
       # get the modifiedRecursive mean
-      modR <- modifiedRecursiveTrim(tempData[[rtVar]])
+      modR <- modifiedRecursiveTrim(tempData[[rtVar]], returnType = "mean")
 
       # find the average, and add to the data frame
       finalData[i, j] <- round(mean(c(nonR, modR)), digits = digits)
@@ -116,5 +116,4 @@ hybridRecursive <- function(data,
   }
   return(finalData)
 }
-
 #------------------------------------------------------------------------------

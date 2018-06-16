@@ -6,7 +6,7 @@
 \usage{
 modifiedRecursive(data, minRT, pptVar = "participant",
   condVar = "condition", rtVar = "rt", accVar = "accuracy",
-  omitErrors = TRUE, digits = 3)
+  omitErrors = TRUE, returnType = "mean", digits = 3)
 }
 \arguments{
 \item{data}{A data frame with columns containing: participant identification
@@ -36,6 +36,12 @@ coded as 0 or 1 for incorrect and correct trial, respectively.}
 conducting trimming procedure. Final data returned will not be influenced
 by errors in this case.}
 
+\item{returnType}{Request nature of returned data. "raw" returns trial-
+level data excluding trimmed data; "mean" returns mean response times per
+participant for each experimental condition identified; "median" returns
+median response times per participant for each experimental condition
+identified.}
+
 \item{digits}{How many decimal places to round to after trimming?}
 }
 \description{
@@ -49,7 +55,8 @@ removed,  as described in van Selst & Jolicoeur (1994).
 data(exampleData)
 
 # perform the trimming, returning mean RT
-trimmedData <- modifiedRecursive(data = exampleData, minRT = 150)
+trimmedData <- modifiedRecursive(data = exampleData, minRT = 150,
+returnType = "mean")
 
 }
 \references{

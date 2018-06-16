@@ -219,6 +219,7 @@ nonRecursive <- function(data,
 #------------------------------------------------------------------------------
 
 
+
 #------------------------------------------------------------------------------
 ### The function that acually does the trimming
 nonRecursiveTrim <- function(data, rtVar = "rt", returnType = "mean"){

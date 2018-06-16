@@ -709,11 +709,7 @@ sdTrim <- function(data,
       return(finalData)
     }
 
-
   } # end of perCell == TRUE & perParticipant == TRUE
 
-
 } # end of function
-
 #------------------------------------------------------------------------------
-
