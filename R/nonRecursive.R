@@ -202,7 +202,7 @@ nonRecursive <- function(data,
                                   trimmedData[[condVar]] == currCond, ]
 
         # do the trimming
-        tempData <- nonRecursiveTrim(tempData[[rtVar]], rtVar = rtVar,
+        tempData <- nonRecursiveTrim(tempData, rtVar = rtVar,
                                      returnType = returnType)
 
         # update the final data frame
