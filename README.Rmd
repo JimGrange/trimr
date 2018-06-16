@@ -26,7 +26,7 @@ A stable release of *trimr* [is available on CRAN](https://cran.r-project.org/we
 install.packages("trimr")
 ```
 
-To install the latest version of *trimr* (i.e., the development version of next release), install devtools, and install directly from GitHub by using:
+You can also install the latest developmental version of *trimr*. Please note, though, that this version is undergoing testing and potentially has unidentified bugs. (If you do use this version and note a bug, [please log it as an issue](https://github.com/JimGrange/trimr/issues)). To install the developmental version, you will first need to install the *devtools* package and install *trimr* directly from GitHub by using the following commands:
 
 ```{r, eval = FALSE}
 # install devtools
