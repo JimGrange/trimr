@@ -1,6 +1,6 @@
 Package: trimr
 Version: 1.1.0
-Date: 2015-08-28
+Date: 2018-06-17
 Authors@R: c(
     person("James A.", "Grange", email = "grange.jim@gmail.com", role = c("cre", "aut")),
     person("Ed", "Berry", role = "ctb"))
@@ -13,7 +13,7 @@ Depends: R (>= 3.1.1)
 Imports: stats, dplyr
 License: GPL-3
 LazyData: true
-URL: https://github.com/JimGrange/trimr
+URL: https://cran.r-project.org/web/packages/trimr/index.html, https://github.com/JimGrange/trimr
 BugReports: https://github.com/JimGrange/trimr/issues
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
