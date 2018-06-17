@@ -1,0 +1,15 @@
+citHeader("To cite trimr in publications use:")
+
+citEntry(entry = "Manual",
+  title        = "trimr: An implementation of common response time trimming methods.",
+  author       = personList(as.person("James A Grange")),
+  year         = "2018",
+  note         = "R package version 1.1.0.",
+  url          = "https://cran.r-project.org/web/packages/trimr/index.html",
+
+  textVersion  =
+  paste("Grange, J.A. (2018).",
+        "trimr: An implementation of common response time trimming methods.",
+        "R Package Version 1.1.0.",
+        "URL https://cran.r-project.org/web/packages/trimr/index.html")
+)
