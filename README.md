@@ -1,21 +1,27 @@
-[![](http://www.r-pkg.org/badges/version/trimr)](https://cran.r-project.org/web/packages/trimr/index.html)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/trimr)](https://cran.r-project.org/web/packages/trimr/index.html)
-
 trimr: Response Time Trimming in R
 ==================================
 
-For a detailed overview of how to use *trimr*, please see the vignettes.
+Test. For a detailed overview of how to use *trimr*, please see the
+vignettes.
 
 Installation
 ------------
 
-A stable release of *trimr* [is available on CRAN](https://cran.r-project.org/web/packages/trimr/). To install this, use:
+A stable release of *trimr* [is available on
+CRAN](https://cran.r-project.org/web/packages/trimr/). To install this,
+use:
 
 ``` r
 install.packages("trimr")
 ```
 
-You can also install the latest developmental version of *trimr*. Please note, though, that this version is undergoing testing and potentially has unidentified bugs. (If you do use this version and note a bug, [please log it as an issue](https://github.com/JimGrange/trimr/issues)). To install the developmental version, you will first need to install the *devtools* package and install *trimr* directly from GitHub by using the following commands:
+You can also install the latest developmental version of *trimr*. Please
+note, though, that this version is undergoing testing and potentially
+has unidentified bugs. (If you do use this version and note a bug,
+[please log it as an issue](https://github.com/JimGrange/trimr/issues)).
+To install the developmental version, you will first need to install the
+*devtools* package and install *trimr* directly from GitHub by using the
+following commands:
 
 ``` r
 # install devtools
@@ -28,20 +34,27 @@ devools::install_github("JimGrange/trimr")
 Overview
 --------
 
-*trimr* is an R package that implements most commonly-used response time trimming methods, allowing the user to go from a raw data file to a finalised data file ready for inferential statistical analysis.
+*trimr* is an R package that implements most commonly-used response time
+trimming methods, allowing the user to go from a raw data file to a
+finalised data file ready for inferential statistical analysis.
 
-The trimming functions available in *trimr* fall broadly into three families:
+The trimming functions available in *trimr* fall broadly into three
+families:
 
 1.  **Absolute Value Criterion**
 2.  **Standard Deviation Criterion**
 3.  **Recursive / Moving Criterion**
 
-The latter implements the methods first suggsted by Van Selst & Jolicoeur (1994).
+The latter implements the methods first suggsted by Van Selst &
+Jolicoeur (1994).
 
 Example
 -------
 
-In the example below, we go from a data frame containing data from 32 participants (in total, 20,518 trials) to a trimmed data set showing the mean trimmed RT for each experimental condition & participant using the modified recursive trimming procedure of Van Selst & Jolicoeur (1994):
+In the example below, we go from a data frame containing data from 32
+participants (in total, 20,518 trials) to a trimmed data set showing the
+mean trimmed RT for each experimental condition & participant using the
+modified recursive trimming procedure of Van Selst & Jolicoeur (1994):
 
 ``` r
 # load trimr's library
@@ -119,4 +132,6 @@ devtools::install_github("JimGrange/trimr")
 References
 ----------
 
-Van Selst, M., & Jolicoeur, P. (1994). A solution to the effect of sample size on outlier elimination. *Quarterly Journal of Experimental Psychology, 47 (A)*, 631–650.
+Van Selst, M., & Jolicoeur, P. (1994). A solution to the effect of
+sample size on outlier elimination. *Quarterly Journal of Experimental
+Psychology, 47 (A)*, 631–650.
