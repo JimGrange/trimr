@@ -1,8 +1,7 @@
 trimr: Response Time Trimming in R
 ==================================
 
-Test. For a detailed overview of how to use *trimr*, please see the
-vignettes.
+For a detailed overview of how to use *trimr*, please see the vignettes.
 
 Installation
 ------------
