@@ -4,8 +4,16 @@
 \alias{hybridRecursive}
 \title{hybridRecursive trimming procedure.}
 \usage{
-hybridRecursive(data, minRT, pptVar = "participant", condVar = "condition",
-  rtVar = "rt", accVar = "accuracy", omitErrors = TRUE, digits = 3)
+hybridRecursive(
+  data,
+  minRT,
+  pptVar = "participant",
+  condVar = "condition",
+  rtVar = "rt",
+  accVar = "accuracy",
+  omitErrors = TRUE,
+  digits = 3
+)
 }
 \arguments{
 \item{data}{A data frame with columns containing: participant identification

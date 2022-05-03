@@ -2,9 +2,9 @@
 output: html_document
 ---
 
-trimr 1.0.1.9000
+trimr 1.1.1
 ===========
-Development version
+Minor release renaming vignette files.
 
 trimr 1.0.1
 ===========

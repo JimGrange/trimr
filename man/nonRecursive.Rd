@@ -4,9 +4,17 @@
 \alias{nonRecursive}
 \title{nonRecursive trimming procedure.}
 \usage{
-nonRecursive(data, minRT, pptVar = "participant", condVar = "condition",
-  rtVar = "rt", accVar = "accuracy", omitErrors = TRUE,
-  returnType = "mean", digits = 3)
+nonRecursive(
+  data,
+  minRT,
+  pptVar = "participant",
+  condVar = "condition",
+  rtVar = "rt",
+  accVar = "accuracy",
+  omitErrors = TRUE,
+  returnType = "mean",
+  digits = 3
+)
 }
 \arguments{
 \item{data}{A data frame with columns containing: participant identification

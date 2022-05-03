@@ -1,10 +1,10 @@
 ---
-title: "trimr: Response Time Trimming in R"
+title: "Overview of the trimr package"
 author: "James A. Grange"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{overview}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

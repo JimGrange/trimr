@@ -4,9 +4,18 @@
 \alias{absoluteRT}
 \title{Absolute RT trimming}
 \usage{
-absoluteRT(data, minRT, maxRT, pptVar = "participant",
-  condVar = "condition", rtVar = "rt", accVar = "accuracy",
-  omitErrors = TRUE, returnType = "mean", digits = 3)
+absoluteRT(
+  data,
+  minRT,
+  maxRT,
+  pptVar = "participant",
+  condVar = "condition",
+  rtVar = "rt",
+  accVar = "accuracy",
+  omitErrors = TRUE,
+  returnType = "mean",
+  digits = 3
+)
 }
 \arguments{
 \item{data}{A data frame with columns containing: participant identification

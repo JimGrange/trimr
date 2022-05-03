@@ -4,9 +4,17 @@
 \alias{modifiedRecursive}
 \title{modifiedRecursive trimming procedure.}
 \usage{
-modifiedRecursive(data, minRT, pptVar = "participant",
-  condVar = "condition", rtVar = "rt", accVar = "accuracy",
-  omitErrors = TRUE, returnType = "mean", digits = 3)
+modifiedRecursive(
+  data,
+  minRT,
+  pptVar = "participant",
+  condVar = "condition",
+  rtVar = "rt",
+  accVar = "accuracy",
+  omitErrors = TRUE,
+  returnType = "mean",
+  digits = 3
+)
 }
 \arguments{
 \item{data}{A data frame with columns containing: participant identification

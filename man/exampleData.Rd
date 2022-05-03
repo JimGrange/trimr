@@ -4,14 +4,16 @@
 \name{exampleData}
 \alias{exampleData}
 \title{Example response time data set}
-\format{A data frame with 20518 rows and 4 variables:
+\format{
+A data frame with 20518 rows and 4 variables:
 \describe{
     \item{participant}{participant identification number}
     \item{condition}{the experimental condition (2 in this example)}
     \item{rt}{response time, coded in milliseconds}
     \item{accuracy}{accuracy of the response; 1 = correct, 0 = error}
 
-    }}
+    }
+}
 \usage{
 exampleData
 }

@@ -4,10 +4,20 @@
 \alias{sdTrim}
 \title{RT trimming with standard deviation criterion}
 \usage{
-sdTrim(data, minRT, sd, pptVar = "participant", condVar = "condition",
-  rtVar = "rt", accVar = "accuracy", perCondition = TRUE,
-  perParticipant = TRUE, omitErrors = TRUE, returnType = "mean",
-  digits = 3)
+sdTrim(
+  data,
+  minRT,
+  sd,
+  pptVar = "participant",
+  condVar = "condition",
+  rtVar = "rt",
+  accVar = "accuracy",
+  perCondition = TRUE,
+  perParticipant = TRUE,
+  omitErrors = TRUE,
+  returnType = "mean",
+  digits = 3
+)
 }
 \arguments{
 \item{data}{A data frame with columns containing: participant identification
