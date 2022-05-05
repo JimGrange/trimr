@@ -13,7 +13,7 @@ Depends: R (>= 4.0)
 Imports: stats, dplyr
 License: GPL-3
 LazyData: true
-URL: https://github.com/JimGrange/trimr
+URL: https://cran.r-project.org/web/packages/trimr/index.html, https://github.com/JimGrange/trimr
 BugReports: https://github.com/JimGrange/trimr/issues
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
