@@ -2,7 +2,7 @@ Package: trimr
 Version: 1.1.0
 Date: 2018-06-17
 Authors@R: c(
-    person("James A.", "Grange", email = "grange.jim@gmail.com", role = c("cre", "aut")),
+    person("James", "Grange", email = "grange.jim@gmail.com", role = c("cre", "aut")),
     person("Ed", "Berry", role = "ctb"))
 Title: An Implementation of Common Response Time Trimming Methods
 Description: Provides various commonly-used response time trimming
