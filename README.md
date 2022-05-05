@@ -1,3 +1,6 @@
+[![](http://www.r-pkg.org/badges/version/trimr)](https://cran.r-project.org/web/packages/trimr/index.html)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/trimr)](https://cran.r-project.org/web/packages/trimr/index.html)
+
 # trimr: Response Time Trimming in R
 
 For a detailed overview of how to use *trimr*, please see the vignettes.
